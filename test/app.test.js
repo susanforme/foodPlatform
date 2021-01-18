@@ -16,6 +16,17 @@ describe('测试query', () => {
       query: HELLO,
       // variables: { id: 1 }
     });
-    expect(res).toMatchSnapshot();
+    // 生成快照
+    expect(res.data).toMatchSnapshot();
+
+    /*
+     * 这是mutation的代码
+     * const { mutate } = createTestClient(server);
+     * const res = await mutate({
+     *  mutation: BOOK_TRIPS,
+     *  variables: { launchIds: ['1', '2'] },
+     * });
+     * expect(res).toMatchSnapshot();
+     */
   });
 });
