@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env nodemon --watch 'src/' -e ts --exec 'ts-node' ./src/app.ts",
-    "serve": "./dist/app.js",
-    "build": "tsc"
+    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' -e ts --exec 'ts-node' ./src/app.ts",
+    "serve": "node NODE_ENV=production ./dist/app.js",
+    "build": "tsc && find ./src -name '*.graphql' -type f -exec cp --parents {} ./dist \\;"
   },
   "keywords": [],
   "author": "",
@@ -29,5 +29,8 @@
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3",
     "typings": "^2.1.1"
+  },
+  "_moduleAliases": {
+    "@": "src"
   }
 }
