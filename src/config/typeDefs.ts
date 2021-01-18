@@ -5,6 +5,7 @@
  * @LastEditTime: 2021-01-18 16:06:02
  */
 import { join } from 'path';
+
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 

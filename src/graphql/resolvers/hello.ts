@@ -5,12 +5,12 @@
  * @LastEditTime: 2021-01-18 16:20:28
  */
 
-const testResolver = {
+const helloResolver = {
   Query: {
-    test() {
-      return 'test';
+    hello() {
+      return 'hello wrold';
     },
   },
 };
 
-export default testResolver;
+export default helloResolver;
