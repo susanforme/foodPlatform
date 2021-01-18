@@ -3,6 +3,8 @@ const { createTestClient } = require('apollo-server-testing');
 const { server } = require('./util');
 const gql = require('graphql-tag');
 
+// casual https://github.com/boo1ean/casual 随机数据生成
+
 const HELLO = gql`
   query Hello {
     hello
