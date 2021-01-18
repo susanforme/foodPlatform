@@ -2,7 +2,7 @@
  * @Author: Spring Breeze
  * @Date: 2021-01-18 15:52:26
  * @FilePath: \foodPlatform\src\app.ts
- * @LastEditTime: 2021-01-18 16:16:06
+ * @LastEditTime: 2021-01-18 18:30:33
  */
 import 'module-alias/register';
 import { ApolloServer } from 'apollo-server';
@@ -13,6 +13,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
+
 server.listen().then(({ url }) => {
   console.log(`服务已经在${url} 启动`);
 });
