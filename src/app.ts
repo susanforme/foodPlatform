@@ -6,6 +6,7 @@ import { resolvers } from './config/resolvers';
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  tracing: true,
 });
 
 server.listen().then(({ url }) => {
