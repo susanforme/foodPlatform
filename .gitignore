@@ -1,6 +1,6 @@
 /node_modules
 /dist
-/env
-/bin
+.env
 yarn-error.log
 /**/__snapshots__
+/cert
