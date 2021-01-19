@@ -6,3 +6,5 @@
 action是create delete Update
 type 如Book类型
 ```
+
+# 不需要后台管理
