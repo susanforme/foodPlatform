@@ -8,7 +8,13 @@
 const helloResolver = {
   Query: {
     hello() {
-      return 'hello wrold';
+      let text = 1;
+      const arr: number[] = [];
+      for (let i = 0; i < 100000; i++) {
+        text = text + Math.random() * 20;
+        arr.push(text);
+      }
+      return 'result is ' + arr.sort().join(',');
     },
   },
 };

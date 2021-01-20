@@ -11,6 +11,7 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import configurations from '../bin/config';
 import { FoodServer, NODE_ENV } from '@/types';
+import responseCachePlugin from 'apollo-server-plugin-response-cache';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -21,6 +22,8 @@ const apollo = new ApolloServer({
   typeDefs,
   resolvers,
   tracing: true,
+  // 缓存
+  plugins: [responseCachePlugin()],
 });
 const app = express();
 apollo.applyMiddleware({ app });
