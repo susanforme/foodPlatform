@@ -14,6 +14,7 @@ export const errMap = {
     U0002: { msg: 'email已经存在', code: 'U0002' },
     U0003: { msg: '手机号已存在', code: 'U0003' },
     U0004: { msg: 'email格式错误', code: 'U0004' },
+    U0005: { msg: '该用户不存在', code: 'U005' },
   },
 };
 

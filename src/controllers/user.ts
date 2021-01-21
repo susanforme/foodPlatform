@@ -58,6 +58,18 @@ export async function addUser(data: UserData) {
   };
 }
 
+/**
+ * @description
+ * 通过id查询
+ */
+export async function findByIdUser(id: string) {
+  const data = await User.findById(id, ['username', 'headImg']);
+  if (!data) {
+    throw new ServerError(errMap.user.U0005);
+  }
+  return data;
+}
+
 interface UserData {
   username: string;
   password: string;

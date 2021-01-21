@@ -5,7 +5,7 @@ import { Context } from '@/document/context';
 
 const userResolver = {
   Query: {
-    user() {},
+    user(_: any, args: any) {},
   },
   Mutation: {
     async register(_: any, args: any, context: Context) {
@@ -19,6 +19,9 @@ const userResolver = {
         birthday,
       });
       // 输入session
+      if (context.session) {
+        context.session.username = username;
+      }
       return response;
     },
   },

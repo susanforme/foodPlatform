@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' -e ts --exec 'ts-node' ./src/app.ts",
+    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' -e ts --exec 'ts-node' --files ./src/app.ts",
     "serve": "node NODE_ENV=production ./dist/app.js",
     "build": "tsc && gulp copy",
     "clean": "gulp clean",
@@ -38,7 +38,6 @@
     "@types/express-session": "^1.17.3",
     "@types/identicon.js": "^2.3.0",
     "@types/jest": "^26.0.20",
-    "@types/mongoose": "^5.10.3",
     "@types/node": "^14.14.21",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",

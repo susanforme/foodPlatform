@@ -9,7 +9,7 @@ import http from 'http';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import configurations from '../bin/config';
-import { FoodServer, NODE_ENV } from '@/types';
+import { FoodServer, NODE_ENV } from '@/plugins/types';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import { PATH_ENV } from './plugins';
 import { context } from './document/context';
@@ -28,7 +28,9 @@ const apollo = new ApolloServer({
   context,
 });
 const app = express();
-apollo.applyMiddleware({ app });
+
+setConfig(app);
+apollo.applyMiddleware({ app, path: '/' });
 let server: FoodServer;
 
 if (config.ssl) {
@@ -45,12 +47,9 @@ mongoose
     pass: PATH_ENV.DATA_BASE_FOOD_PASSWORD,
   })
   .then(() => {
-    setConfig(app);
     server.listen(config.port, () => {
       console.log(
-        `服务器已经成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${
-          config.port
-        }/graphql`,
+        `服务器已经成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}`,
       );
     });
   });

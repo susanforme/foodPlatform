@@ -15,7 +15,6 @@ const connection = mongoose.createConnection('mongodb://localhost:27017/food', {
 });
 
 export const setConfig = function (app: express.Express) {
-  console.log('test');
   app.use(bodyPareser.json());
   app.use(
     session({
