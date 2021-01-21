@@ -35,6 +35,7 @@ const ArticleSchema = new Schema({
       ref: 'User',
     },
   ],
+  // 不返回所有评论
   comment: [
     {
       type: Schema.Types.ObjectId,

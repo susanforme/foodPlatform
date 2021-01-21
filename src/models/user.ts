@@ -32,8 +32,8 @@ const UserSchema = new Schema({
     type: Number,
   },
   // 以下皆为预留字段
-  phonenumber: {
-    type: String,
+  phoneNumber: {
+    type: Number,
   },
 });
 const User = mongoose.model<IUser>('User', UserSchema);
@@ -48,4 +48,5 @@ export interface IUser extends mongoose.Document {
   location: String;
   birthday?: number;
   email?: string;
+  phoneNumber?: number;
 }

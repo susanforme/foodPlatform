@@ -52,8 +52,6 @@ module.exports = {
     'no-native-reassign': 2,
     // 必须使用es6简便写法
     'object-shorthand': 2,
-    // 每个文件的最大类的数量
-    'max-classes-per-file': ['error', 1],
     // 禁用tab
     'no-tabs': 2,
     // 禁止出现无意义的数字
