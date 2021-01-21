@@ -14,6 +14,7 @@ import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import { PATH_ENV } from './plugins';
 import bodyPareser from 'body-parser';
 import { getMySession } from './config';
+import { context } from './document/context';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -25,6 +26,7 @@ const apollo = new ApolloServer({
   tracing: true,
   // 缓存
   plugins: [responseCachePlugin()],
+  context,
 });
 const app = express();
 apollo.applyMiddleware({ app });

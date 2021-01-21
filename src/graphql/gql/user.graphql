@@ -1,0 +1,32 @@
+type Query {
+  user(id: ID!): User
+}
+
+type Mutation {
+  register(data: RegisterData!): User
+}
+
+interface User {
+  createTime: Int!
+  username: String!
+  headImg: String!
+  email: String
+  birthday: Int
+}
+
+input RegisterData {
+  username: String!
+  password: String!
+  birthday: Int
+  email: String
+  # 保留字段
+  phoneNumber: Int
+}
+
+# type Author @cacheControl(maxAge: 60) {
+#  id: Int
+#  firstName: String
+#  lastName: String
+# 缓存180
+#  posts: [Post] @cacheControl(maxAge: 180)
+# }
