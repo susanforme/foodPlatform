@@ -1,26 +1,37 @@
+scalar BigInt
 type Query {
   user(id: ID!): User
 }
 
 type Mutation {
   register(data: RegisterData!): User
+  login(data: LoginData!): User
 }
 
-interface User {
-  createTime: Int!
+# 不要错误定义为接口,接口必须要有具体实现
+type User {
+  createTime: BigInt!
   username: String!
   headImg: String!
   email: String
-  birthday: Int
+  birthday: BigInt
+  location: String!
+  id: ID!
 }
 
 input RegisterData {
   username: String!
   password: String!
-  birthday: Int
+  birthday: BigInt
   email: String
   # 保留字段
   phoneNumber: Int
+}
+
+input LoginData {
+  username: String!
+  email: String!
+  password: String!
 }
 
 # type Author @cacheControl(maxAge: 60) {

@@ -9,6 +9,7 @@ module.exports = {
   moduleNameMapper: {
     '^variables$': 'variables/dist/cjs',
     '^[NAME OF MODULE YOU WANT TO IMPORT]$': '[NAME OF MODULE YOU WANT TO IMPORT]/dist/cjs',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   transform: { '\\.ts$': ['ts-jest'] },
 };

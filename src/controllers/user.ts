@@ -6,13 +6,14 @@ import { errMap, ServerError } from '@/plugins/errors';
 import { validate as isEmail } from 'email-validator';
 import { ipToAddress, PATH_ENV } from '@/plugins';
 
+const returnData = ['username', 'headImg', 'createTime', 'id', 'birthday', 'email', 'location'];
+
 /**
  * @description
  * 注册账号
  */
 export async function addUser(data: UserData) {
   const { username, password, birthday, email, phoneNumber, ip } = data;
-
   // 校验是否有重复的账号
   const repeatingData = await Promise.all([
     User.findOne({ username }),
@@ -47,14 +48,18 @@ export async function addUser(data: UserData) {
     email,
     phoneNumber,
     location,
+    username,
   });
 
   const response = await user.save();
   return {
-    location: response.location,
-    username: response.username,
+    location,
+    username,
     id: response.id,
-    headImg: response.headImg,
+    headImg,
+    createTime: response.createTime,
+    email,
+    birthday,
   };
 }
 
@@ -62,10 +67,49 @@ export async function addUser(data: UserData) {
  * @description
  * 通过id查询
  */
-export async function findByIdUser(id: string) {
-  const data = await User.findById(id, ['username', 'headImg']);
+export async function getUserById(id: string) {
+  const data = await User.findById(id, returnData);
   if (!data) {
     throw new ServerError(errMap.user.U0005);
+  }
+  return data;
+}
+
+/**
+ * @description
+ * 更新头像,需要校验是否是本人,id是否相同
+ */
+export async function updateUserHeadImg(id: string, headImg: string) {
+  const data = await User.findByIdAndUpdate(id, { headImg });
+  return data;
+}
+
+/**
+ * @description
+ * 删除用户,需要校验是否是本人,id是否相同
+ */
+export async function deleteUser(id: string) {
+  await User.findByIdAndDelete(id);
+  return {
+    code: '00000',
+    msg: '成功删除用户',
+  };
+}
+
+/**
+ * 登录
+ * @param body
+ */
+export async function loginByData(body: LoginData) {
+  const { password } = body,
+    encryPass = sha256(password + PATH_ENV.ENCRY_USER_STRING).toString();
+  const encryData = {
+    ...body,
+    password: encryPass,
+  };
+  const data = await User.findOne(encryData, returnData);
+  if (!data) {
+    throw new ServerError(errMap.user.U0006);
   }
   return data;
 }
@@ -79,3 +123,9 @@ interface UserData {
   // 保留字段
   phoneNumber?: number;
 }
+
+type LoginData = {
+  username?: string;
+  email?: string;
+  password: string;
+};

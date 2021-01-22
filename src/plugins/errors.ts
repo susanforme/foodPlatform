@@ -10,11 +10,14 @@ export class ServerError extends ApolloError {
 
 export const errMap = {
   user: {
+    // 注册账号错误
     U0001: { msg: '用户名已经存在', code: 'U0001' },
     U0002: { msg: 'email已经存在', code: 'U0002' },
     U0003: { msg: '手机号已存在', code: 'U0003' },
     U0004: { msg: 'email格式错误', code: 'U0004' },
-    U0005: { msg: '该用户不存在', code: 'U005' },
+    U0005: { msg: '该用户不存在', code: 'U0005' },
+    // 登录发生错误
+    U0006: { msg: '用户名或密码错误', code: 'U0006' },
   },
 };
 
