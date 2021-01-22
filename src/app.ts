@@ -8,12 +8,11 @@ import https from 'https';
 import http from 'http';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import configurations from '../bin/config';
 import { FoodServer, NODE_ENV } from '@/plugins/types';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import { PATH_ENV } from './plugins';
 import { context } from './document/context';
-import { setConfig } from './config';
+import { setConfig, configurations } from './config';
 import dayjs from 'dayjs';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
