@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' -e ts --exec 'ts-node' --files ./src/app.ts",
-    "serve": "node NODE_ENV=production ./dist/app.js",
+    "serve": "cross-env NODE_ENV=production node ./dist/app.js",
     "build": "tsc && gulp copy",
     "clean": "gulp clean",
     "test": "jest "
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
     "@types/express": "^4.17.11",
-    "@types/express-session": "^1.17.3",
+    "@types/express-session": "1.17.0",
     "@types/identicon.js": "^2.3.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.21",
