@@ -9,6 +9,7 @@ export class ServerError extends ApolloError {
 }
 
 export const errMap = {
+  // U0
   user: {
     // 注册账号错误
     U0001: { msg: '用户名已经存在', code: 'U0001' },
@@ -18,6 +19,10 @@ export const errMap = {
     U0005: { msg: '该用户不存在', code: 'U0005' },
     // 登录发生错误
     U0006: { msg: '用户名或密码错误', code: 'U0006' },
+  },
+  // U1
+  upload: {
+    U1001: { msg: 'cos上传失败', code: 'U1001' },
   },
 };
 

@@ -3,7 +3,7 @@
 import { addUser, getUserById, loginByData } from '@/controllers/user';
 import { Context } from '@/document/context';
 
-const userResolver = {
+export default {
   Query: {
     user(_: any, args: any) {
       return getUserById(args.id);
@@ -11,6 +11,7 @@ const userResolver = {
   },
   Mutation: {
     async register(_: any, args: any, context: Context) {
+      // 防止传入错误参数
       const { password, username, email, phoneNumber, birthday } = args.data;
       const response = await addUser({
         ip: context.ip,
@@ -39,5 +40,3 @@ const userResolver = {
     },
   },
 };
-
-export default userResolver;

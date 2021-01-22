@@ -1,4 +1,6 @@
 import { GraphQLScalarType, Kind } from 'graphql';
+import { GraphQLUpload } from 'graphql-upload';
+
 const bigIntScalar = new GraphQLScalarType({
   name: 'BigInt',
   description: '一个大整数,为了解决Int位数不够',
@@ -20,4 +22,5 @@ const bigIntScalar = new GraphQLScalarType({
 
 export default {
   BigInt: bigIntScalar,
+  Upload: GraphQLUpload,
 };
