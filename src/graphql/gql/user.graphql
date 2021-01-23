@@ -7,6 +7,8 @@ type Mutation {
   register(data: RegisterData!): User
   login(data: LoginData!): User
   remove(id: ID!): RemoveData
+  # 通过session登录
+  loginBySession: User
 }
 
 # 不要错误定义为接口,接口必须要有具体实现

@@ -20,6 +20,8 @@ export const errMap = {
     // 登录发生错误
     U0006: { msg: '用户名或密码错误', code: 'U0006' },
     U0007: { msg: '注销失败,身份校验错误', code: 'U0007' },
+    // 未登录
+    U0008: { msg: '未登录', code: 'U0008' },
   },
   // U1
   upload: {

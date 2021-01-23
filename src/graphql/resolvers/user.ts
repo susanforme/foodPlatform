@@ -1,6 +1,12 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
-import { addUser, deleteUser, getUserById, loginByData } from '@/controllers/user';
+import {
+  addUser,
+  deleteUser,
+  getUserById,
+  getUserByUsername,
+  loginByData,
+} from '@/controllers/user';
 import { Context } from '@/document/context';
 import { auth, now } from '@/plugins';
 import { errMap, ServerError } from '@/plugins/errors';
@@ -55,6 +61,15 @@ export default {
       context.session?.destroy(() => {
         console.log(`${now()} id为${id},username为${username}的账户已经注销成功,并成功清除session`);
       });
+      return response;
+    },
+    // 通过session登录
+    async loginBySession(_: any, __: any, context: Context) {
+      const username = context.session.username;
+      if (!username) {
+        return errMap.user.U0008;
+      }
+      const response = await getUserByUsername(username);
       return response;
     },
   },
