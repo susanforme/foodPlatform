@@ -7,8 +7,9 @@ import { errMap, ServerError } from '@/plugins/errors';
 
 export default {
   Query: {
-    user(_: any, args: any) {
-      return getUserById(args.id);
+    async user(_: any, args: any) {
+      const response = await getUserById(args.id);
+      return response;
     },
   },
   Mutation: {

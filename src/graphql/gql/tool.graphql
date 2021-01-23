@@ -1,0 +1,9 @@
+type Query {
+  # 请求验证码
+  captcha: String
+}
+
+type captchaData {
+  text: String!
+  img: String!
+}

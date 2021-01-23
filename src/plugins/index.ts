@@ -33,3 +33,24 @@ export async function auth(id: string, username: string) {
   const serverId = (await getUserByUsername(username)).id;
   return id === serverId;
 }
+
+/**
+ * @description
+ * 随机数生成
+ * @param count 生成随机数数量
+ * @param isInteger 是否为整数
+ * @param low 下边界
+ * @param high 上边界
+ */
+export function getRandomNums(count: number, isInteger: boolean, low: number, high: number) {
+  const randomNums: number[] = [];
+  for (let i = 0; i < count; i++) {
+    const num = Math.random() * (high - low) + low;
+    if (isInteger) {
+      randomNums.push(Math.round(num));
+    } else {
+      randomNums.push(num);
+    }
+  }
+  return randomNums;
+}
