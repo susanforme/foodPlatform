@@ -77,6 +77,18 @@ export async function getUserById(id: string) {
 
 /**
  * @description
+ * 通过用户名查询用户
+ */
+export async function getUserByUsername(username: string) {
+  const data = await User.findOne({ username }, returnData);
+  if (!data) {
+    throw new ServerError(errMap.user.U0005);
+  }
+  return data;
+}
+
+/**
+ * @description
  * 更新头像,需要校验是否是本人,id是否相同
  */
 export async function updateUserHeadImg(id: string, headImg: string) {

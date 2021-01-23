@@ -19,6 +19,7 @@ export const errMap = {
     U0005: { msg: '该用户不存在', code: 'U0005' },
     // 登录发生错误
     U0006: { msg: '用户名或密码错误', code: 'U0006' },
+    U0007: { msg: '注销失败,身份校验错误', code: 'U0007' },
   },
   // U1
   upload: {

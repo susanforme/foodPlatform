@@ -10,10 +10,9 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { FoodServer, NODE_ENV } from '@/plugins/types';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
-import { PATH_ENV } from './plugins';
+import { now, PATH_ENV } from './plugins';
 import { context } from './document/context';
 import { setConfig, configurations } from './config';
-import dayjs from 'dayjs';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -39,7 +38,7 @@ if (config.ssl) {
   server = http.createServer(app);
 }
 
-console.log(`${dayjs().format('YYYY-MM-DD H时mm分s秒')},开始数据库连接`);
+console.log(`${now()},开始数据库连接`);
 mongoose
   .connect('mongodb://localhost:27017/food', {
     useNewUrlParser: true,
@@ -48,12 +47,10 @@ mongoose
     pass: PATH_ENV.DATA_BASE_FOOD_PASSWORD,
   })
   .then(() => {
-    console.log(`${dayjs().format('YYYY-MM-DD H时mm分s秒')},数据库连接成功`);
+    console.log(`${now()},数据库连接成功`);
     server.listen(config.port, () => {
       console.log(
-        `${dayjs().format('YYYY-MM-DD H时mm分s秒')},服务器成功启动在http${
-          config.ssl ? 's' : ''
-        }://${config.hostname}:${config.port}`,
+        `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}`,
       );
     });
   });

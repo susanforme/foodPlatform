@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   register(data: RegisterData!): User
   login(data: LoginData!): User
+  remove(id: ID!): RemoveData
 }
 
 # 不要错误定义为接口,接口必须要有具体实现
@@ -17,6 +18,12 @@ type User {
   birthday: BigInt
   location: String!
   id: ID!
+}
+
+# 注销账号返回的提示数据
+type RemoveData {
+  code: String!
+  msg: String!
 }
 
 input RegisterData {
