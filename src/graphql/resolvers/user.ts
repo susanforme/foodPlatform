@@ -1,7 +1,7 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
 import {
-  addUser,
+  createUser,
   deleteUser,
   getUserById,
   getUserByUsername,
@@ -23,7 +23,7 @@ export default {
     async register(_: any, args: any, context: Context) {
       // 防止传入错误参数
       const { password, username, email, phoneNumber, birthday } = args.data;
-      const response = await addUser({
+      const response = await createUser({
         ip: context.ip,
         password,
         username,

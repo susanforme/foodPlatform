@@ -6,13 +6,13 @@ import { errMap, ServerError } from '@/plugins/errors';
 import { validate as isEmail } from 'email-validator';
 import { ipToAddress, PATH_ENV } from '@/plugins';
 
-const returnData = ['username', 'headImg', 'createTime', 'id', 'birthday', 'email', 'location'];
+const returnData = { password: 0 };
 
 /**
  * @description
  * 注册账号
  */
-export async function addUser(data: UserData) {
+export async function createUser(data: UserData) {
   const { username, password, birthday, email, phoneNumber, ip } = data;
   // 校验是否有重复的账号
   const repeatingData = await Promise.all([

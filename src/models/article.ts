@@ -69,14 +69,16 @@ export default Article;
 
 export interface IArticle extends mongoose.Document {
   createTime: number;
-  author: IUser;
+  author: IUser | string;
   title: string;
   content: string;
   traffic: number;
-  give: IUser[];
-  comment: IComment[];
+  give: IUser[] | string[];
+  comment: IComment[] | string[];
   lastEditTime: number;
+  // 显示在文章下半区的小标签
   label: string[];
+  // 大的分类
   kind: IKind;
   imgPath: string[];
 }

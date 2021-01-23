@@ -3,6 +3,7 @@ import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import { getUserByUsername } from '@/controllers/user';
 import dayjs from 'dayjs';
+import { IComment } from '@/models/comment';
 
 export function getIsDev() {
   return process.env.NODE_ENV === 'development';
@@ -53,4 +54,19 @@ export function getRandomNums(count: number, isInteger: boolean, low: number, hi
     }
   }
   return randomNums;
+}
+
+export function getCommentTree(comment: IComment[]) {
+  const father = comment.filter((v) => v.commentFatherId === undefined),
+    child = comment.filter((v) => v.commentFatherId !== undefined);
+  child.forEach((v) => {
+    const childFather = v.commentFatherId;
+    for (const key in father) {
+      if (childFather === father[key].id) {
+        father[key].commentChild = v;
+        return;
+      }
+    }
+  });
+  return father;
 }

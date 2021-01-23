@@ -27,6 +27,10 @@ export const errMap = {
   upload: {
     U1001: { msg: 'cos上传失败', code: 'U1001' },
   },
+  // A0
+  article: {
+    A0001: { msg: '文章不存在', code: 'A0001' },
+  },
 };
 
 Object.freeze(errMap);
