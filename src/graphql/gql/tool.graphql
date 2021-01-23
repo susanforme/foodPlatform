@@ -7,3 +7,8 @@ type captchaData {
   text: String!
   img: String!
 }
+
+type ResponseData {
+  code: String!
+  msg: String!
+}

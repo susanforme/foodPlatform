@@ -34,6 +34,7 @@ export default {
       // 输入session
       if (context.session) {
         context.session.username = username;
+        context.session.id = response.id;
       }
       return response;
     },
@@ -46,6 +47,7 @@ export default {
       // 输入session
       if (context.session) {
         context.session.username = response.username;
+        context.session.id = response.id;
       }
       return response;
     },

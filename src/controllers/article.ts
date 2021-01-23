@@ -3,7 +3,10 @@ import { IComment } from '@/models/comment';
 import { getCommentTree } from '@/plugins';
 import { errMap, ServerError } from '@/plugins/errors';
 
-// 返回字段应该添加是否点赞,点赞数量
+/**
+ * @description
+ * 创建文章
+ */
 export async function createArticle(data: createArticleData) {
   const article = new Article({
     ...data,
@@ -17,8 +20,12 @@ export async function createArticle(data: createArticleData) {
   return response;
 }
 
+/**
+ * @description
+ * 查询文章
+ */
 export async function getArticle(id: string) {
-  const product = await Article.findById(id)
+  const product = await Article.findById(id, { give: 0 })
     .populate('author', {
       headImg: 1,
       userName: 1,
@@ -42,6 +49,21 @@ export async function getArticle(id: string) {
     comment: getCommentTree(product?.comment as IComment[]),
   };
   return data;
+}
+
+/**
+ * @description
+ * 更新文章
+ */
+export async function updateArticle(data: UpdateArticleData) {
+  const product = await Article.findByIdAndUpdate(data.id, {
+    ...data,
+    lastEditTime: new Date().valueOf(),
+  });
+  if (!product) {
+    throw new ServerError(errMap.article.A0001);
+  }
+  return product;
 }
 
 /**
@@ -124,6 +146,18 @@ export async function getArticleUserGive(articleId: string, userId: string) {
   return { isGive, giveCount };
 }
 
+/**
+ * @description
+ * 删除文章,注意鉴权
+ */
+export async function deleteArticle(id: string) {
+  await Article.findByIdAndDelete(id);
+  return {
+    code: '00000',
+    msg: '删除成功',
+  };
+}
+
 interface createArticleData {
   author: string;
   title: string;
@@ -137,4 +171,11 @@ interface commentData {
   comment: string;
   img?: string;
   commentFatherId?: string;
+}
+
+interface UpdateArticleData {
+  title: string;
+  content: string;
+  imgPath: string[];
+  id: string;
 }

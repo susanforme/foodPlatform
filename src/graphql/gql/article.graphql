@@ -1,7 +1,67 @@
-# type Query{
-#   article:Artilce
-# }
+type Query {
+  article(id: ID!): Article!
+}
 
-# type Article{
-  
-# }
+type Mutation {
+  # 只返回id,手动跳转
+  createArticle(data: CreateArticleData!): ChangeArticleRes!
+  updateArticle(data: UpdateArticleData!): ChangeArticleRes!
+  deleteArticle(id: ID!): ResponseData!
+  updateArticleComment: String
+  updateArticleTraffic: String
+}
+input CreateArticleData {
+  author: String!
+  title: String!
+  content: String!
+  imgPath: [String!]!
+  kind: [String!]!
+  label: [String!]!
+}
+
+input UpdateArticleData {
+  title: String!
+  content: String!
+  imgPath: [String!]!
+  id: ID!
+}
+
+type ChangeArticleRes {
+  code: String!
+  msg: String!
+  id: String!
+}
+type Article {
+  createTime: BigInt!
+  author: Author!
+  title: String!
+  content: String!
+  traffic: Int!
+  comment: [ArticleComment]!
+  lastEditTime: BigInt
+  # 显示在文章下半区的小标签
+  label: [String]!
+  # 大的分类
+  kind: [String!]!
+  imgPath: [String!]!
+  isGive: Boolean!
+  giveCount: Int!
+}
+
+type Author {
+  headImg: String!
+  userName: String!
+  id: ID!
+}
+
+type ArticleComment {
+  createTime: BigInt!
+  publisher: Author!
+  comment: String!
+  articleId: String!
+  lastEditTime: BigInt
+  commentFatherId: String
+  commentChild: ArticleComment
+  img: String
+  id: ID!
+}
