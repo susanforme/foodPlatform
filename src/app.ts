@@ -25,11 +25,22 @@ const apollo = new ApolloServer({
   // 缓存
   plugins: [responseCachePlugin()],
   context,
+  playground: {
+    settings: {
+      'request.credentials': 'include',
+    },
+  },
 });
 const app = express();
 
 setConfig(app);
-apollo.applyMiddleware({ app, path: '/' });
+
+app.use('/graphql', (req, res, next) => {
+  console.log(req.session?.username);
+  next();
+});
+apollo.applyMiddleware({ app });
+
 let server: FoodServer;
 
 if (config.ssl) {

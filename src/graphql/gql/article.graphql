@@ -7,8 +7,10 @@ type Mutation {
   createArticle(data: CreateArticleData!): ChangeArticleRes!
   updateArticle(data: UpdateArticleData!): ChangeArticleRes!
   deleteArticle(id: ID!): ResponseData!
-  updateArticleComment: String
-  updateArticleTraffic: String
+  createArticleComment(data: CreateArticleCommentData!): ID!
+  updateArticleTraffic(id: ID!): Int!
+  # 点赞文章
+  updateArticleGive(id: ID!): Int!
 }
 input CreateArticleData {
   author: String!
@@ -19,6 +21,13 @@ input CreateArticleData {
   label: [String!]!
 }
 
+input CreateArticleCommentData {
+  articleId: String!
+  comment: String!
+  commentFatherId: ID
+  img: String
+}
+
 input UpdateArticleData {
   title: String!
   content: String!
@@ -27,9 +36,7 @@ input UpdateArticleData {
 }
 
 type ChangeArticleRes {
-  code: String!
-  msg: String!
-  id: String!
+  articleId: ID!
 }
 type Article {
   createTime: BigInt!

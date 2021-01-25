@@ -9,12 +9,8 @@ export async function createComment(data: CreateCommentData) {
     ...data,
     createTime: new Date().valueOf(),
   });
-  const cData = await comment.save();
-  return {
-    code: '0000',
-    msg: '成功发表评论',
-    data: cData,
-  };
+  const product = await comment.save();
+  return product;
 }
 
 /**
@@ -22,11 +18,8 @@ export async function createComment(data: CreateCommentData) {
  * 更新评论,同时需要鉴定是否本人发表
  */
 export async function updateComment(commentId: string, comment: string) {
-  await Comment.findByIdAndUpdate(commentId, { comment });
-  return {
-    code: '0000',
-    msg: '成功更新评论',
-  };
+  const product = await Comment.findByIdAndUpdate(commentId, { comment });
+  return product;
 }
 
 /**
@@ -35,10 +28,7 @@ export async function updateComment(commentId: string, comment: string) {
  */
 export async function deleteComment(id: string) {
   await Comment.findByIdAndDelete(id);
-  return {
-    code: '0000',
-    msg: '成功删除评论',
-  };
+  return;
 }
 
 interface CreateCommentData {

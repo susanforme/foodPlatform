@@ -53,6 +53,18 @@ export async function getArticle(id: string) {
 
 /**
  * @description
+ * 删除文章,注意鉴权
+ */
+export async function deleteArticle(id: string) {
+  await Article.findByIdAndDelete(id);
+  return {
+    code: '00000',
+    msg: '删除成功',
+  };
+}
+
+/**
+ * @description
  * 更新文章
  */
 export async function updateArticle(data: UpdateArticleData) {
@@ -68,29 +80,15 @@ export async function updateArticle(data: UpdateArticleData) {
 
 /**
  * @description
- * 这里只做文章数据集合的更新,还需要同时修改comment集合
+ * 发表文章下的评论,这里只做文章数据集合的更新,还需要同时修改comment集合
  */
-export async function updateArticleComment(
-  articleId: string,
-  userId: string,
-  commentData: commentData,
-) {
-  const newComment = {
-    ...commentData,
-    publisher: userId,
-    createTime: new Date().valueOf(),
-    articleId,
-  };
-  await Article.findByIdAndUpdate(articleId, {
+export async function createArticleComment(commentData: CommentData) {
+  await Article.findByIdAndUpdate(commentData.articleId, {
     $push: {
-      comment: newComment,
+      comment: commentData.commentId,
     },
   });
-  return {
-    code: '00000',
-    msg: '评论成功',
-    data: newComment,
-  };
+  return;
 }
 
 /**
@@ -107,10 +105,7 @@ export async function updateArticleTraffic(id: string) {
   await Article.findByIdAndUpdate(id, {
     traffic: traffic + 1,
   });
-  return {
-    code: '00000',
-    msg: '更新文章访问量成功',
-  };
+  return traffic + 1;
 }
 
 /**
@@ -146,18 +141,6 @@ export async function getArticleUserGive(articleId: string, userId: string) {
   return { isGive, giveCount };
 }
 
-/**
- * @description
- * 删除文章,注意鉴权
- */
-export async function deleteArticle(id: string) {
-  await Article.findByIdAndDelete(id);
-  return {
-    code: '00000',
-    msg: '删除成功',
-  };
-}
-
 interface createArticleData {
   author: string;
   title: string;
@@ -167,10 +150,9 @@ interface createArticleData {
   label: string[];
 }
 
-interface commentData {
-  comment: string;
-  img?: string;
-  commentFatherId?: string;
+interface CommentData {
+  articleId: string;
+  commentId: string;
 }
 
 interface UpdateArticleData {

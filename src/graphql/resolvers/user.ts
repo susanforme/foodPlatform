@@ -34,7 +34,7 @@ export default {
       // 输入session
       if (context.session) {
         context.session.username = username;
-        context.session.id = response.id;
+        context.session.userId = response.id;
       }
       return response;
     },
@@ -47,8 +47,13 @@ export default {
       // 输入session
       if (context.session) {
         context.session.username = response.username;
-        context.session.id = response.id;
+        context.session.userId = response.id;
       }
+      context.session?.save((err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
       return response;
     },
     // 删除账号
