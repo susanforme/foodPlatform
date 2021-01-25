@@ -10,9 +10,9 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { FoodServer, NODE_ENV } from '@/plugins/types';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
-import { now, PATH_ENV } from './plugins';
+import { createSession, now, PATH_ENV } from './plugins';
 import { context } from './document/context';
-import { setConfig, configurations } from './config';
+import { configurations } from './config';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -33,12 +33,7 @@ const apollo = new ApolloServer({
 });
 const app = express();
 
-setConfig(app);
-
-app.use('/graphql', (req, res, next) => {
-  console.log(req.session?.username);
-  next();
-});
+app.use(createSession());
 apollo.applyMiddleware({ app });
 
 let server: FoodServer;
