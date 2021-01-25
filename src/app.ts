@@ -49,6 +49,7 @@ mongoose
   .connect('mongodb://localhost:27017/food', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
     user: PATH_ENV.DATA_BASE_FOOD_ACCOUNT,
     pass: PATH_ENV.DATA_BASE_FOOD_PASSWORD,
   })

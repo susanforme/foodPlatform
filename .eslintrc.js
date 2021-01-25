@@ -17,7 +17,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     'no-unused-vars': 0,
     'no-unused-expressions': 'off',
-    '@typescript-eslint/no-unused-expressions': 2,
+    '@typescript-eslint/no-unused-expressions': 0,
     'no-var': 2,
     camelcase: 2,
     'lines-around-comment': [

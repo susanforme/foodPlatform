@@ -14,20 +14,18 @@ const returnData = { password: 0 };
  */
 export async function createUser(data: UserData) {
   const { username, password, birthday, email, phoneNumber, ip } = data;
+
+  const checkPromise = [User.findOne({ username })];
+  email && checkPromise.push(User.findOne({ email }));
+
   // 校验是否有重复的账号
-  const repeatingData = await Promise.all([
-    User.findOne({ username }),
-    User.findOne({ email }),
-    User.findOne({ phoneNumber }),
-  ]);
+  const repeatingData = await Promise.all(checkPromise);
   repeatingData.forEach((v, index) => {
     if (v) {
       if (index === 0) {
         throw new ServerError(errMap.user.U0001);
       } else if (index === 1) {
         throw new ServerError(errMap.user.U0002);
-      } else {
-        throw new ServerError(errMap.user.U0003);
       }
     }
   });

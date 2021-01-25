@@ -14,8 +14,13 @@ function copy() {
 function clean(cb) {
   return del(['dist', 'yarn-error.log'], cb);
 }
+// 清除快照
+function cleanTest(cb) {
+  return del(['test/__snapshots__/*'], cb);
+}
 module.exports = {
   default: copy,
   copy,
   clean,
+  cleanTest,
 };

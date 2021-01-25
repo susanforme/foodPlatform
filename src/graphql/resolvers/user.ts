@@ -8,7 +8,7 @@ import {
   loginByData,
 } from '@/controllers/user';
 import { Context } from '@/document/context';
-import { auth, now } from '@/plugins';
+import { now } from '@/plugins';
 import { errMap, ServerError } from '@/plugins/errors';
 
 export default {
@@ -49,19 +49,13 @@ export default {
         context.session.username = response.username;
         context.session.userId = response.id;
       }
-      context.session?.save((err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
       return response;
     },
     // 删除账号
     async remove(_: any, args: any, context: Context) {
       const id = args.id,
         username = context.session.username;
-      const authResult = await auth(id, username);
-      if (!authResult) {
+      if (id !== context.session.userId) {
         throw new ServerError(errMap.user.U0007);
       }
       const response = await deleteUser(id);

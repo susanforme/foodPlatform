@@ -30,6 +30,7 @@ export const errMap = {
   // A0
   article: {
     A0001: { msg: '文章不存在', code: 'A0001' },
+    A0002: { msg: '评论只能本人修改', code: 'A0002' },
   },
 };
 

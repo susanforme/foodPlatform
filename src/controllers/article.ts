@@ -28,7 +28,7 @@ export async function getArticle(id: string) {
   const product = await Article.findById(id, { give: 0 })
     .populate('author', {
       headImg: 1,
-      userName: 1,
+      username: 1,
       id: 1,
     })
     .populate('comment', {
@@ -41,13 +41,15 @@ export async function getArticle(id: string) {
     })
     .populate('comment.publisher', {
       headImg: 1,
-      userName: 1,
+      username: 1,
       id: 1,
     });
-  const data = {
-    ...product,
+  if (!product) {
+    throw new ServerError(errMap.article.A0001);
+  }
+  const data = Object.assign(product, {
     comment: getCommentTree(product?.comment as IComment[]),
-  };
+  });
   return data;
 }
 
@@ -114,15 +116,16 @@ export async function updateArticleTraffic(id: string) {
  * @param userId 用户id
  */
 export async function updateArticleGive(articleId: string, userId: string) {
-  const data = await Article.findByIdAndUpdate(articleId, {
+  const giveData = await getArticleUserGive(articleId, userId);
+  if (giveData.isGive) {
+    return giveData.giveCount;
+  }
+  await Article.findByIdAndUpdate(articleId, {
     $push: {
       give: userId,
     },
   });
-  if (!data) {
-    throw new ServerError(errMap.article.A0001);
-  }
-  return data.give.length;
+  return giveData.giveCount + 1;
 }
 
 /**

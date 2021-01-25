@@ -8,7 +8,7 @@ import {
   updateArticleGive,
   updateArticleTraffic,
 } from '@/controllers/article';
-import { createComment } from '@/controllers/comment';
+import { createComment, updateComment } from '@/controllers/comment';
 import { Context } from '@/document/context';
 import { errMap, ServerError } from '@/plugins/errors';
 
@@ -17,11 +17,8 @@ export default {
     async article(_: any, args: any, context: Context) {
       const id = args.id;
       const userId = context.session.userId || '';
-      const datas = await Promise.all([getArticle(id), getArticleUserGive(id, userId)]);
-      return {
-        ...datas[0],
-        ...datas[1],
-      };
+      const data = await Promise.all([getArticle(id), getArticleUserGive(id, userId)]);
+      return Object.assign(data[0], data[1]);
     },
   },
   Mutation: {
@@ -64,7 +61,7 @@ export default {
         publisher: context.session.userId,
       });
       await createArticleComment({ articleId, commentId: response.id });
-      return response;
+      return response.id;
     },
     // 访问量
     async updateArticleTraffic(_: any, args: any) {
@@ -77,6 +74,15 @@ export default {
       const articleId = args.id;
       const giveCount = await updateArticleGive(articleId, context.session.userId);
       return giveCount;
+    },
+    // 修改评论
+    async updateComment(_: any, args: any, context: Context) {
+      const { userId, commentId, comment } = args.data;
+      if (userId !== context.session.userId) {
+        throw new ServerError(errMap.article.A0002);
+      }
+      await updateComment(commentId, comment);
+      return commentId;
     },
   },
 };

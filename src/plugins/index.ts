@@ -29,16 +29,6 @@ export async function ipToAddress(ip: string): Promise<string> {
 }
 
 /**
- *
- * @param id 客户端传过来的id
- * @param username session取得的用户名
- */
-export async function auth(id: string, username: string) {
-  const serverId = (await getUserByUsername(username)).id;
-  return id === serverId;
-}
-
-/**
  * @description
  * 随机数生成
  * @param count 生成随机数数量

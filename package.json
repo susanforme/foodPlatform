@@ -8,7 +8,7 @@
     "serve": "cross-env NODE_ENV=production node ./dist/app.js",
     "build": "tsc && gulp copy",
     "clean": "gulp clean",
-    "test": "jest "
+    "test": "gulp cleanTest && jest "
   },
   "keywords": [],
   "author": "",
@@ -47,6 +47,7 @@
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "apollo-server-testing": "^2.19.2",
+    "casual": "^1.6.2",
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "eslint": "^7.18.0",
