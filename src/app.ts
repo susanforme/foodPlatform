@@ -57,7 +57,9 @@ mongoose
     console.log(`${now()},数据库连接成功`);
     server.listen(config.port, () => {
       console.log(
-        `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}`,
+        `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${
+          config.port
+        }/graphql`,
       );
     });
   });
