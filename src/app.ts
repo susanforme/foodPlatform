@@ -13,6 +13,8 @@ import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import { createSession, now, PATH_ENV } from './plugins';
 import { context } from './document/context';
 import { configurations } from './config';
+// import bodyParser from 'body-parser';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -24,6 +26,7 @@ const apollo = new ApolloServer({
   tracing: true,
   // 缓存
   plugins: [responseCachePlugin()],
+  uploads: false,
   context,
   playground: {
     settings: {
@@ -34,6 +37,12 @@ const apollo = new ApolloServer({
 const app = express();
 
 app.use(createSession());
+app.use(
+  graphqlUploadExpress({
+    maxFileSize: 10000000,
+    maxFiles: 10,
+  }),
+);
 apollo.applyMiddleware({ app });
 
 let server: FoodServer;

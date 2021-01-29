@@ -20,7 +20,6 @@
     "apollo-server-express": "^2.19.2",
     "apollo-server-plugin-response-cache": "^0.5.8",
     "base64-js": "^1.5.1",
-    "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
     "cos-nodejs-sdk-v5": "^2.9.0",
     "crypto-js": "^4.0.0",

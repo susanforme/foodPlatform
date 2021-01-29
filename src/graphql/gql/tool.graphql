@@ -1,9 +1,14 @@
+scalar Upload
 type Query {
   # 请求验证码
-  captcha: String
+  captcha: CaptchaData!
 }
 
-type captchaData {
+type Mutation {
+  singleUpload(file: Upload!): File!
+}
+
+type CaptchaData {
   text: String!
   img: String!
 }
@@ -11,4 +16,8 @@ type captchaData {
 type ResponseData {
   code: String!
   msg: String!
+}
+
+type File {
+  url: String!
 }

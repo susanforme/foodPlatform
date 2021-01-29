@@ -1,4 +1,5 @@
 import { ExpressContext } from 'apollo-server-express';
+import e from 'express';
 
 export function context(context: ExpressContext) {
   const { req } = context,
@@ -8,10 +9,12 @@ export function context(context: ExpressContext) {
   return {
     ip,
     session,
+    req,
   };
 }
 
 export interface Context {
   ip: string;
   session: Express.Session;
+  req: e.Request;
 }

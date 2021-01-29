@@ -1,7 +1,6 @@
 import { join } from 'path';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
-import { getUserByUsername } from '@/controllers/user';
 import dayjs from 'dayjs';
 import { IComment } from '@/models/comment';
 import session from 'express-session';
@@ -15,6 +14,8 @@ export function getIsDev() {
 export const PATH_ENV = dotenv.config({ path: join(process.cwd(), '/bin/.env') }).parsed || {};
 
 export const now = () => dayjs().format('YYYY-MM-DD H时mm分s秒');
+
+export const ROOT_DIR = join(__dirname, '../../');
 
 export async function ipToAddress(ip: string): Promise<string> {
   // 开发模式直接返回北京
