@@ -13,8 +13,11 @@ import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import { createSession, now, PATH_ENV } from './plugins';
 import { context } from './document/context';
 import { configurations } from './config';
-// import bodyParser from 'body-parser';
 import { graphqlUploadExpress } from 'graphql-upload';
+import ws from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import { execute, subscribe } from 'graphql';
+import { chatRoots, chatSchema } from './document/chat';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -53,7 +56,11 @@ if (config.ssl) {
   server = http.createServer(app);
 }
 
-console.log(`${now()},开始数据库连接`);
+const wsServer = new ws.Server({
+  server,
+  path: '/graphql',
+});
+
 mongoose
   .connect('mongodb://localhost:27017/food', {
     useNewUrlParser: true,
@@ -65,6 +72,16 @@ mongoose
   .then(() => {
     console.log(`${now()},数据库连接成功`);
     server.listen(config.port, () => {
+      useServer(
+        {
+          schema: chatSchema,
+          roots: chatRoots,
+          execute,
+          subscribe,
+        },
+        wsServer,
+      );
+      console.log(`${now()},websocket服务启动成功`);
       console.log(
         `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${
           config.port
