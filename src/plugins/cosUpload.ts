@@ -25,8 +25,7 @@ async function cosUpload(options: Options) {
     throw new ServerError(errMap.upload.U1001);
   }
   return {
-    // 客户端自行拼接
-    url: `${time}/${filename + timeHash}`,
+    url: result.Location,
   };
 }
 

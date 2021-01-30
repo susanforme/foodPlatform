@@ -1,6 +1,7 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
 import { getCaptcha } from '@/controllers/tool';
+import { now } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
 
 export default {
@@ -18,6 +19,7 @@ export default {
         filename,
         file: stream,
       });
+      console.log(`${now()},文件名为${filename}上传成功`);
       return {
         url,
       };
