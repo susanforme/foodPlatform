@@ -15,9 +15,7 @@ import { context } from './document/context';
 import { configurations } from './config';
 import { graphqlUploadExpress } from 'graphql-upload';
 import ws from 'ws';
-import { useServer } from 'graphql-ws/lib/use/ws';
-import { execute, subscribe } from 'graphql';
-import { chatRoots, chatSchema } from './document/chat';
+import { setWs } from './plugins/ws';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -72,15 +70,7 @@ mongoose
   .then(() => {
     console.log(`${now()},数据库连接成功`);
     server.listen(config.port, () => {
-      useServer(
-        {
-          schema: chatSchema,
-          roots: chatRoots,
-          execute,
-          subscribe,
-        },
-        wsServer,
-      );
+      setWs(wsServer);
       console.log(`${now()},websocket服务启动成功`);
       console.log(
         `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${

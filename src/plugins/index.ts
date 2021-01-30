@@ -6,6 +6,7 @@ import { IComment } from '@/models/comment';
 import session from 'express-session';
 import mongo from 'connect-mongo';
 import mongoose from 'mongoose';
+import { PubSub } from 'apollo-server';
 
 export function getIsDev() {
   return process.env.NODE_ENV === 'development';
@@ -16,6 +17,8 @@ export const PATH_ENV = dotenv.config({ path: join(process.cwd(), '/bin/.env') }
 export const now = () => dayjs().format('YYYY-MM-DD H时mm分s秒');
 
 export const ROOT_DIR = join(__dirname, '../../');
+
+export const pubSub = new PubSub();
 
 export async function ipToAddress(ip: string): Promise<string> {
   // 开发模式直接返回北京

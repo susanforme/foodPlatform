@@ -21,7 +21,7 @@ const RecordSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  msg: {
+  message: {
     type: String,
     default: ' ',
   },
@@ -37,7 +37,7 @@ export default Record;
 interface IRecord extends mongoose.Document {
   send: IUser;
   receive: IUser;
-  msg: string;
+  message: string;
   createTime: number;
   roomId: string;
   img: string;

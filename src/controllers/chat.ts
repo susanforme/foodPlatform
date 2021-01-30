@@ -7,12 +7,13 @@ import { IUser } from '@/models/user';
  * 直接插入聊天记录,当房间不存在的时候创建房间
  */
 export async function updateRecord(uploadData: uploadMsg) {
-  const { roomId, send, receive, msg } = uploadData;
+  const { send, receive, message } = uploadData;
+  const roomId = [send, receive].sort().reduce((pre, cur) => pre + cur);
   const record = new Record({
     roomId,
     send,
     receive,
-    msg,
+    message,
     createTime: new Date().valueOf(),
   });
   const { id } = await record.save();
@@ -84,10 +85,9 @@ export async function deleteRoom(id: string) {
 }
 
 interface uploadMsg {
-  roomId: string;
   send: string;
   receive: string;
-  msg: string;
+  message: string;
   createTime: string;
   img?: string;
 }
