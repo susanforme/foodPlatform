@@ -27,18 +27,27 @@ export const chatSchema = buildSchema(`
   }
 `);
 
-const chats: any[] = [];
+const chats: any[] = [
+  {
+    receive: 'first',
+    send: 'send',
+    message: 'msg',
+  },
+];
 const CHAT_CHANNEL = 'CHAT_CHANNEL';
 // The roots provide resolvers for each GraphQL operation
 export const chatRoots = {
   Query: {
     chats() {
+      console.log('chats');
+
       return chats;
     },
   },
   Mutation: {
     sendMessage(_: any, args: any) {
       const { receive, send, message } = args;
+      console.log(receive);
       const chat = {
         receive,
         send,

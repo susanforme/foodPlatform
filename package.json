@@ -30,13 +30,12 @@
     "express-session": "^1.17.1",
     "graphql": "^15.4.0",
     "graphql-upload": "^11.0.0",
-    "graphql-ws": "^4.1.2",
     "identicon.js": "^2.3.3",
     "module-alias": "^2.2.2",
     "mongoose": "^5.11.12",
     "node-fetch": "^2.6.1",
-    "svg-captcha": "^1.4.0",
-    "ws": "^7.4.2"
+    "subscriptions-transport-ws": "^0.9.18",
+    "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
