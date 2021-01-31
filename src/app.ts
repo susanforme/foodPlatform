@@ -14,7 +14,7 @@ import { createSession, now, PATH_ENV } from './plugins';
 import { context } from './document/context';
 import { configurations } from './config';
 import { graphqlUploadExpress } from 'graphql-upload';
-import { Server as IOServer } from 'socket.io';
+import socket from 'socket.io';
 import setWs from './plugins/ws';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
@@ -54,7 +54,7 @@ if (config.ssl) {
   server = http.createServer(app);
 }
 
-const socketServer = new IOServer(server, {
+const socketServer = socket(server, {
   path: '/subscriptions',
 });
 

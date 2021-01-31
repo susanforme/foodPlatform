@@ -1,9 +1,11 @@
 import { UploadRecordData } from '@/controllers/chat';
-import { Socket, Server } from 'socket.io';
+import { Server } from 'socket.io';
 import { getRoomId } from '.';
 
 export default function setWs(socketServer: Server) {
-  socketServer.on('connection', (socket: Socket) => {
+  socketServer.on('connection', (socket) => {
+    console.log(`ws连接开启`);
+
     socket.on('chat', (data: UploadRecordData) => {
       const userIds = [data.send, data.receive];
       const roomId = getRoomId(userIds);
