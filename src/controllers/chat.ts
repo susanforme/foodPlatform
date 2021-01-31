@@ -1,19 +1,21 @@
 import Record from '@/models/record';
 import Room from '@/models/room';
 import { IUser } from '@/models/user';
+import { getRoomId } from '@/plugins';
 
 /**
  * @description
  * 直接插入聊天记录,当房间不存在的时候创建房间
  */
-export async function updateRecord(uploadData: uploadMsg) {
-  const { send, receive, message } = uploadData;
-  const roomId = [send, receive].sort().reduce((pre, cur) => pre + cur);
+export async function updateRecord(uploadRecordData: UploadRecordData) {
+  const { send, receive, message, img } = uploadRecordData;
+  const roomId = getRoomId([send, receive]);
   const record = new Record({
     roomId,
     send,
     receive,
     message,
+    img,
     createTime: new Date().valueOf(),
   });
   const { id } = await record.save();
@@ -84,10 +86,9 @@ export async function deleteRoom(id: string) {
   return;
 }
 
-interface uploadMsg {
+export interface UploadRecordData {
   send: string;
   receive: string;
   message: string;
-  createTime: string;
   img?: string;
 }

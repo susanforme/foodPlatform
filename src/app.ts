@@ -14,6 +14,8 @@ import { createSession, now, PATH_ENV } from './plugins';
 import { context } from './document/context';
 import { configurations } from './config';
 import { graphqlUploadExpress } from 'graphql-upload';
+import { Server as IOServer } from 'socket.io';
+import setWs from './plugins/ws';
 
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
@@ -52,6 +54,10 @@ if (config.ssl) {
   server = http.createServer(app);
 }
 
+const socketServer = new IOServer(server, {
+  path: '/subscriptions',
+});
+
 mongoose
   .connect('mongodb://localhost:27017/food', {
     useNewUrlParser: true,
@@ -62,6 +68,7 @@ mongoose
   })
   .then(() => {
     console.log(`${now()},数据库连接成功`);
+    setWs(socketServer);
     server.listen(config.port, () => {
       console.log(`${now()},websocket服务启动成功`);
       console.log(
