@@ -54,9 +54,7 @@ if (config.ssl) {
   server = http.createServer(app);
 }
 
-const socketServer = socket(server, {
-  path: '/subscriptions',
-});
+const socketServer = socket(server);
 
 mongoose
   .connect('mongodb://localhost:27017/food', {

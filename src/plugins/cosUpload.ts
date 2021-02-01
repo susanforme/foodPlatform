@@ -14,8 +14,8 @@ async function cosUpload(options: Options) {
   const timeHash = sha512(new Date().toUTCString()).toString();
   const time = new Date().toLocaleDateString().replace(/\//g, '.');
   const result = await cos.putObject({
-    Bucket: 'food-1256396014' /* 必须 */,
-    Region: 'ap-chengdu' /* 必须 */,
+    Bucket: 'chengcheng-1256396014' /* 必须 */,
+    Region: 'ap-guangzhou' /* 必须 */,
     Key: `/img/public/${time}/${filename + timeHash}` /* 必须 */,
     StorageClass: 'STANDARD',
     // 上传文件对象
