@@ -10,7 +10,7 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { FoodServer, NODE_ENV } from '@/plugins/types';
 import responseCachePlugin from 'apollo-server-plugin-response-cache';
-import { createSession, now, PATH_ENV } from './plugins';
+import { mySession, now, PATH_ENV } from './plugins';
 import { context } from './document/context';
 import { configurations } from './config';
 import { graphqlUploadExpress } from 'graphql-upload';
@@ -37,7 +37,7 @@ const apollo = new ApolloServer({
 });
 const app = express();
 
-app.use(createSession());
+app.use(mySession);
 app.use(
   graphqlUploadExpress({
     maxFileSize: 10000000,

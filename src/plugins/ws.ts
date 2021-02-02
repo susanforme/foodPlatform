@@ -1,11 +1,15 @@
 import { updateRecord, UploadRecordData } from '@/controllers/chat';
+import sharedsession from 'express-socket.io-session';
 import { Server } from 'socket.io';
-import { getRoomId, now } from '.';
+import { getRoomId, mySession, now } from '.';
 
 export default function setWs(socketServer: Server) {
+  // 杀掉多余websocket
+  socketServer.use(sharedsession(mySession, { autoSave: true }));
   socketServer.on('connection', (socket) => {
-    console.log(`ws连接开启`);
+    console.log(socket.handshake.session?.userId);
 
+    console.log(`ws连接开启`);
     socket.on('chat', (data: UploadRecordData) => {
       const { send, receive, message, img } = data;
       const userIds = [send, receive];
@@ -25,7 +29,7 @@ export default function setWs(socketServer: Server) {
         });
     });
     socket.on('disconnect', () => {
-      console.log(`username的客户端已经断开${new Date().toLocaleString()}`);
+      console.log(`${now()},username的客户端已经断开`);
     });
   });
 }

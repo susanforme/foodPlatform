@@ -69,7 +69,7 @@ export function getCommentTree(comment: IComment[]) {
   return father;
 }
 
-export function createSession() {
+export const mySession = (function createSession() {
   const MongoStore = mongo(session);
   const connection = mongoose.createConnection('mongodb://localhost:27017/food', {
     useNewUrlParser: true,
@@ -94,4 +94,4 @@ export function createSession() {
     }),
     saveUninitialized: true,
   });
-}
+})();
