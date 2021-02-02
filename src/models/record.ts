@@ -40,5 +40,5 @@ interface IRecord extends mongoose.Document {
   message: string;
   createTime: number;
   roomId: string;
-  img: string;
+  img?: string;
 }

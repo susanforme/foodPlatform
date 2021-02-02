@@ -17,7 +17,7 @@ export const now = () => dayjs().format('YYYY-MM-DD H时mm分s秒');
 
 export const ROOT_DIR = join(__dirname, '../../');
 
-export function getRoomId(ids: string[]) {
+export function getRoomId(ids: string[]): string {
   return ids.sort().reduce((pre, cur) => pre + cur);
 }
 

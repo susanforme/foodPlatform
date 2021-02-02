@@ -1,0 +1,28 @@
+type Query {
+  messageList(id: ID!): [MsgListData]
+  chatHistory(data: ChatHistoryInput): [Record]
+}
+type Mutation {
+  deleteRoom(id: ID!): ResponseData
+}
+
+input ChatHistoryInput {
+  me: ID!
+  other: ID!
+  page: Int!
+}
+
+type MsgListData {
+  username: String
+  headImg: String
+  id: ID!
+}
+
+type Record {
+  send: ID!
+  receive: ID!
+  message: String!
+  createTime: BigInt!
+  roomId: String!
+  img: String
+}

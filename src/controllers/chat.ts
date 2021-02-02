@@ -64,11 +64,11 @@ export async function getPersonalChatList(id: string) {
 
 /**
  * @description
- * 查询两个人之间的历史聊天记录,只会返回最近20条,同时需要注意鉴权
+ * 查询两个人之间的历史聊天记录,只会返回20条,同时需要注意鉴权
  */
-export async function queryPersonalHistoryChat(roomId: string, page = 0) {
+export async function queryPersonalHistoryChat(roomId: string, page = 1) {
   const data = await Record.find({ roomId })
-    .skip(page * 20)
+    .skip((page - 1) * 20)
     .sort({
       createTime: 1,
     })
