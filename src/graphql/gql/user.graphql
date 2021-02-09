@@ -34,7 +34,7 @@ input RegisterData {
   birthday: BigInt
   email: String
   # 保留字段
-  phoneNumber: Int
+  phoneNumber: String
 }
 
 input LoginData {

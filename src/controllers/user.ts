@@ -131,7 +131,7 @@ interface UserData {
   birthday?: number;
   email?: string;
   // 保留字段
-  phoneNumber?: number;
+  phoneNumber?: string;
 }
 
 type LoginData = {

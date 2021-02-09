@@ -49,6 +49,8 @@ export default {
         context.session.username = response.username;
         context.session.userId = response.id;
       }
+      console.log(`${now()},username为${username}登录成功`);
+
       return response;
     },
     // 删除账号
@@ -66,6 +68,8 @@ export default {
     },
     // 通过session登录
     async loginBySession(_: any, __: any, context: Context) {
+      console.log(context.session);
+
       const username = context.session.username;
       if (!username) {
         return errMap.user.U0008;

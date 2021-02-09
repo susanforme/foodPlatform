@@ -8,7 +8,8 @@
     "serve": "cross-env NODE_ENV=production node ./dist/app.js",
     "build": "tsc && gulp copy",
     "clean": "gulp clean",
-    "test": "gulp cleanTest && jest "
+    "test": "gulp cleanTest && jest ",
+    "lint": "eslint ./**/*.ts --ext  .ts --cache --fix"
   },
   "keywords": [],
   "author": "",
