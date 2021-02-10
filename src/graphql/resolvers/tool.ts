@@ -3,12 +3,24 @@
 import { getCaptcha } from '@/controllers/tool';
 import { now } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
+import fetch from 'node-fetch';
 
 export default {
   Query: {
     async captcha() {
       const response = getCaptcha();
       return response;
+    },
+    async wallPaper(_: any, args: any) {
+      const search = encodeURI(args.search);
+      const { total } = await fetch(
+        `https://image.so.com/j?q=${search}&src=srp&sn=1&pn=1&zoom=1`,
+      ).then((res) => res.json());
+      const randomNum = Math.round(Math.random() * total);
+      const data = await fetch(
+        `https://image.so.com/j?q=${search}&src=srp&sn=${randomNum - 1}&pn=1&zoom=1`,
+      ).then((res) => res.json());
+      return data.list[0].img;
     },
   },
   Mutation: {

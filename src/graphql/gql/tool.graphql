@@ -2,6 +2,7 @@ scalar Upload
 type Query {
   # 请求验证码
   captcha: CaptchaData!
+  wallPaper(search: String!): String!
 }
 
 type Mutation {
