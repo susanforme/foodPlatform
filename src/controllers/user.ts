@@ -4,7 +4,7 @@ import sha1 from 'crypto-js/sha1';
 import sha256 from 'crypto-js/sha256';
 import { errMap, ServerError } from '@/plugins/errors';
 import { validate as isEmail } from 'email-validator';
-import { ipToAddress, PATH_ENV } from '@/plugins';
+import { PATH_ENV } from '@/plugins';
 
 const returnData = { password: 0 };
 
@@ -13,7 +13,7 @@ const returnData = { password: 0 };
  * 注册账号
  */
 export async function createUser(data: UserData) {
-  const { username, password, birthday, email, phoneNumber, ip } = data;
+  const { username, password, birthday, email, phoneNumber, location } = data;
 
   const checkPromise = [User.findOne({ username })];
   email && checkPromise.push(User.findOne({ email }));
@@ -37,7 +37,6 @@ export async function createUser(data: UserData) {
 
   const headImg = `data:image/png;base64,${new Idention(sha1(username).toString(), 64).toString()}`;
   const encryPass = sha256(password + PATH_ENV.ENCRY_USER_STRING).toString();
-  const location = await ipToAddress(ip);
   const user = new User({
     headImg,
     createTime: new Date().valueOf(),
@@ -124,12 +123,21 @@ export async function loginByData(body: LoginData) {
   return data;
 }
 
+/**
+ * @description
+ * 修改location
+ */
+export async function updateUserLocation(id: string, location: string) {
+  await User.findByIdAndUpdate(id, {
+    location,
+  });
+}
 interface UserData {
   username: string;
   password: string;
-  ip: string;
   birthday?: number;
   email?: string;
+  location: string;
   // 保留字段
   phoneNumber?: string;
 }

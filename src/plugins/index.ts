@@ -21,16 +21,24 @@ export function getRoomId(ids: string[]): string {
   return ids.sort().reduce((pre, cur) => pre + cur);
 }
 
-export async function ipToAddress(ip: string): Promise<string> {
+/**
+ * @description
+ * 将ip转换为地址,同时查询天气
+ */
+export async function ipToAddress(ip: string) {
   // 开发模式直接返回北京
+  let newIp = ip;
   if (!ip || getIsDev()) {
-    return '北京';
+    newIp = '223.86.198.28';
   }
-  const data = await fetch(
-    `https://api.map.baidu.com/location/ip?ak=${PATH_ENV.MY_BAIDU_SERVER_KEY}&ip=${ip}&coor=bd09ll`,
+  const address = await fetch(
+    `https://restapi.amap.com/v3/ip?ip=${newIp}&key=${PATH_ENV.MY_GD_SERVER_KEY}`,
   ).then((response) => response.json());
-  console.log(`${now()} 当前注册账户访问ip为` + ip);
-  return data?.content?.address;
+  const weather = await fetch(`
+  https://restapi.amap.com/v3/weather/weatherInfo?city=${address.adcode}&key=${PATH_ENV.MY_GD_SERVER_KEY}
+  `).then((response) => response.json());
+  console.log(`${now()} 当前账户访问ip为` + newIp);
+  return weather?.lives[0];
 }
 
 /**
