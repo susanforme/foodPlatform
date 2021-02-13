@@ -28,6 +28,8 @@ input CreateArticleData {
   imgPath: [String!]!
   kind: [String!]!
   label: [String!]!
+  # 地理位置
+  location: String!
 }
 
 input CreateArticleCommentData {

@@ -2,11 +2,20 @@ scalar Upload
 type Query {
   # 请求验证码
   captcha: CaptchaData!
-  wallPaper(search: String!): String!
+  wallPaper: String!
+  # 用搜索的结果返回坐标
+  coord(search: String!): String!
 }
 
 type Mutation {
   singleUpload(file: Upload!): File!
+}
+
+type CoordData {
+  citycode: String!
+  adcode: String!
+  name: String!
+  center: String!
 }
 
 type CaptchaData {

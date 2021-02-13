@@ -62,6 +62,11 @@ const ArticleSchema = new Schema({
     type: Array,
     required: true,
   },
+  // location地理位置
+  location: {
+    type: String,
+    required: true,
+  },
 });
 const Article = mongoose.model<IArticle>('Article', ArticleSchema);
 
@@ -81,4 +86,5 @@ export interface IArticle extends mongoose.Document {
   // 大的分类
   kind: IKind;
   imgPath: string[];
+  location: string;
 }

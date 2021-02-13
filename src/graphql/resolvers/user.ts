@@ -39,14 +39,13 @@ export default {
         context.session.username = username;
         context.session.userId = response.id;
       }
-      return {
-        ...response,
+      return Object.assign(response, {
         weather: {
           temperature,
           weather,
           adcode,
         },
-      };
+      });
     },
     // 登录
     async login(_: any, args: any, context: Context) {
@@ -55,22 +54,21 @@ export default {
       const data = username ? { username, password } : { email, password };
       const response = await Promise.all([loginByData(data), ipToAddress(context.ip)]);
       const { weather, temperature, city, adcode } = response[1];
-      await updateUserLocation(context.session.userId, response[1].city);
+      updateUserLocation(context.session.userId, response[1].city);
       // 输入session
       if (context.session) {
         context.session.username = response[0].username;
         context.session.userId = response[0].id;
       }
       console.log(`${now()},username为${username}登录成功`);
-      return {
-        ...response[0],
+      return Object.assign(response[0], {
         location: city,
         weather: {
           temperature,
           weather,
           adcode,
         },
-      };
+      });
     },
     // 删除账号
     async remove(_: any, args: any, context: Context) {
@@ -94,16 +92,15 @@ export default {
       console.log(`${now()},username为${username}登录成功`);
       const response = await Promise.all([getUserByUsername(username), ipToAddress(context.ip)]);
       const { weather, temperature, city, adcode } = response[1];
-      await updateUserLocation(context.session.userId, response[1].city);
-      return {
-        ...response[0],
+      updateUserLocation(context.session.userId, response[1].city);
+      return Object.assign(response[0], {
         location: city,
         weather: {
           temperature,
           weather,
           adcode,
         },
-      };
+      });
     },
   },
 };

@@ -151,6 +151,7 @@ interface createArticleData {
   imgPath: string[];
   kind: string[];
   label: string[];
+  location: string;
 }
 
 interface CommentData {

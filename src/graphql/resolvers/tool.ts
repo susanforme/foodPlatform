@@ -1,7 +1,7 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
 import { getCaptcha } from '@/controllers/tool';
-import { now } from '@/plugins';
+import { now, PATH_ENV } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
 import fetch from 'node-fetch';
 
@@ -21,6 +21,14 @@ export default {
         `https://image.so.com/j?q=${search}&src=srp&sn=${randomNum - 1}&pn=1&zoom=1`,
       ).then((res) => res.json());
       return data.list[0].img;
+    },
+    async coord(_: any, args: any) {
+      const search = encodeURI(args.search);
+      const data = await fetch(`
+      https://restapi.amap.com/v3/config/district?keywords=${search}&subdistrict=0&key=${PATH_ENV.MY_GD_SERVER_KEY}`).then(
+        (res) => res.json(),
+      );
+      return data.districts[0];
     },
   },
   Mutation: {
