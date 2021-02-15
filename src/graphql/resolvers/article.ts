@@ -26,6 +26,7 @@ export default {
       if (!context.session.userId) {
         throw new ServerError(errMap.user.U0008);
       }
+      // 需要location,并且是返回的代码
       const data = args.data;
       const response = await createArticle(data);
       return {

@@ -64,6 +64,8 @@ type Article {
   imgPath: [String!]!
   isGive: Boolean!
   giveCount: Int!
+  # 位置
+  location: String!
 }
 
 type Author {
