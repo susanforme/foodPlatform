@@ -25,27 +25,21 @@ export default {
       // 防止传入错误参数
       const { password, username, email, phoneNumber, birthday } = args.data;
       const weatherData = await ipToAddress(context.ip);
-      const { weather, temperature, adcode, city } = weatherData;
+      const { adcode } = weatherData;
       const response = await createUser({
         password,
         username,
         email,
         phoneNumber,
         birthday,
-        location: city,
+        location: adcode,
       });
       // 输入session
       if (context.session) {
         context.session.username = username;
         context.session.userId = response.id;
       }
-      return Object.assign(response, {
-        weather: {
-          temperature,
-          weather,
-          adcode,
-        },
-      });
+      return response;
     },
     // 登录
     async login(_: any, args: any, context: Context) {
@@ -53,7 +47,7 @@ export default {
       const { username, password, email } = args.data;
       const data = username ? { username, password } : { email, password };
       const response = await Promise.all([loginByData(data), ipToAddress(context.ip)]);
-      const { weather, temperature, city, adcode } = response[1];
+      const { adcode } = response[1];
       updateUserLocation(context.session.userId, response[1].city);
       // 输入session
       if (context.session) {
@@ -62,12 +56,7 @@ export default {
       }
       console.log(`${now()},username为${username}登录成功`);
       return Object.assign(response[0], {
-        location: city,
-        weather: {
-          temperature,
-          weather,
-          adcode,
-        },
+        location: adcode,
       });
     },
     // 删除账号
@@ -91,15 +80,10 @@ export default {
       }
       console.log(`${now()},username为${username}登录成功`);
       const response = await Promise.all([getUserByUsername(username), ipToAddress(context.ip)]);
-      const { weather, temperature, city, adcode } = response[1];
+      const { adcode } = response[1];
       updateUserLocation(context.session.userId, response[1].city);
       return Object.assign(response[0], {
-        location: city,
-        weather: {
-          temperature,
-          weather,
-          adcode,
-        },
+        location: adcode,
       });
     },
   },

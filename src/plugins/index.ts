@@ -23,7 +23,7 @@ export function getRoomId(ids: string[]): string {
 
 /**
  * @description
- * 将ip转换为地址,同时查询天气
+ * 将ip转换为地址
  */
 export async function ipToAddress(ip: string) {
   // 开发模式直接返回北京
@@ -34,10 +34,21 @@ export async function ipToAddress(ip: string) {
   const address = await fetch(
     `https://restapi.amap.com/v3/ip?ip=${newIp}&key=${PATH_ENV.MY_GD_SERVER_KEY}`,
   ).then((response) => response.json());
-  const weather = await fetch(`
-  https://restapi.amap.com/v3/weather/weatherInfo?city=${address.adcode}&key=${PATH_ENV.MY_GD_SERVER_KEY}
-  `).then((response) => response.json());
+
   console.log(`${now()} 当前账户访问ip为` + newIp);
+  return {
+    adcode: address.adcode,
+    city: address.city,
+  };
+}
+
+/**
+ *
+ */
+export async function getWeather(adcode: string) {
+  const weather = await fetch(`
+  https://restapi.amap.com/v3/weather/weatherInfo?city=${adcode}&key=${PATH_ENV.MY_GD_SERVER_KEY}
+  `).then((response) => response.json());
   return weather?.lives[0];
 }
 

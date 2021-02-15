@@ -4,13 +4,20 @@ type Query {
   captcha: CaptchaData!
   wallPaper: String!
   # 用搜索的结果返回坐标
-  coord(search: String!): String!
+  coord(search: String!): CoordData!
+  weather(city: String!): Weather!
 }
 
 type Mutation {
   singleUpload(file: Upload!): File!
 }
 
+# 天气
+type Weather {
+  temperature: String!
+  weather: String!
+  city: String!
+}
 type CoordData {
   citycode: String!
   adcode: String!

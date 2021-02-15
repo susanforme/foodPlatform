@@ -20,20 +20,12 @@ type User {
   birthday: BigInt
   location: String!
   id: ID!
-  weather: Weather
 }
 
 # 注销账号返回的提示数据
 type RemoveData {
   code: String!
   msg: String!
-}
-
-# 天气
-type Weather {
-  temperature: String!
-  weather: String!
-  adcode: String!
 }
 
 input RegisterData {

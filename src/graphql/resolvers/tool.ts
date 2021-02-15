@@ -1,7 +1,7 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
 import { getCaptcha } from '@/controllers/tool';
-import { now, PATH_ENV } from '@/plugins';
+import { getWeather, now, PATH_ENV } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
 import fetch from 'node-fetch';
 
@@ -29,6 +29,10 @@ export default {
         (res) => res.json(),
       );
       return data.districts[0];
+    },
+    async weather(_: any, args: any) {
+      const data = await getWeather(args.city);
+      return data;
     },
   },
   Mutation: {
