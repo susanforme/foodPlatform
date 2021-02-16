@@ -1,0 +1,10 @@
+# 后台相关schema
+
+type Mutation {
+  createKind(kindName: String!): CreateKindData!
+}
+
+type CreateKindData {
+  kindName: String!
+  id: String!
+}

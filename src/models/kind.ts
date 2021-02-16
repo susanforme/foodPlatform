@@ -14,3 +14,4 @@ export default Kind;
 export interface IKind extends mongoose.Document {
   kindName: string;
 }
+// 大概有小吃 特产 异地美食 其他

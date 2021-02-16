@@ -1,5 +1,8 @@
 type Query {
   article(id: ID!): Article!
+  kind: CreateKindData!
+  # 根据点赞数量排行20个
+  giveFiveCountArticle(data: GiveFiveCountArticleInput): ArticleItems!
 }
 
 type Mutation {
@@ -13,6 +16,32 @@ type Mutation {
   updateArticleGive(id: ID!): Int!
   # 修改评论
   updateComment(data: UpdateCommentData!): ID!
+}
+
+input GiveFiveCountArticleInput {
+  page: Int
+  kind: String
+  # 每页的个数
+  perPage: Int
+}
+type ArticleItems {
+  items: [SingleArticleItem!]!
+  total: Int!
+}
+type SingleArticleItem {
+  img: String!
+  score: Int!
+  author: SingleArticleItemAuthor!
+  give: Int!
+  title: String!
+  content: String!
+  label: [String!]!
+  id: ID!
+}
+type SingleArticleItemAuthor {
+  headImg: String!
+  username: String!
+  userId: ID!
 }
 
 input UpdateCommentData {

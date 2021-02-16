@@ -1,5 +1,6 @@
 import Article from '@/models/article';
 import { IComment } from '@/models/comment';
+import { IUser } from '@/models/user';
 import { getCommentTree } from '@/plugins';
 import { errMap, ServerError } from '@/plugins/errors';
 
@@ -51,6 +52,59 @@ export async function getArticle(id: string) {
     comment: getCommentTree(product?.comment as IComment[]),
   });
   return data;
+}
+
+/**
+ * @description
+ * 根据点赞数量来排行,并且返回大概的信息,同时需要分类限制,如果没有分类则不限制
+ */
+export async function getGiveFiveCountArticle(data: GiveFiveCountArticleData) {
+  const { page = 1, kind, perPage = 20 } = data;
+  const total = await Article.find({
+    kind,
+  }).count();
+  const response = await Article.find({
+    kind,
+  })
+    .skip((page - 1) * 20)
+    .sort({
+      give: 1,
+    })
+    .limit(perPage)
+    .populate('author', {
+      headImg: 1,
+      username: 1,
+      id: 1,
+    });
+  const sRes = response.map((v) => {
+    const { imgPath, score, author, give, title, content, label, id } = v;
+    const { headImg, username, id: userId } = author as IUser;
+    return {
+      img: imgPath[0],
+      score,
+      author: {
+        headImg,
+        username,
+        userId,
+      },
+      give: give.length,
+      title,
+      content,
+      label,
+      id,
+    };
+  });
+  return {
+    items: sRes,
+    total,
+  };
+}
+
+interface GiveFiveCountArticleData {
+  page?: number;
+  kind?: string;
+  // 每页的个数
+  perPage?: number;
 }
 
 /**

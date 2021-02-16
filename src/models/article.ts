@@ -14,6 +14,7 @@ const ArticleSchema = new Schema({
     ref: 'User',
     type: Schema.Types.ObjectId,
   },
+  // 标题限制字数
   title: {
     type: String,
     required: true,
@@ -46,7 +47,7 @@ const ArticleSchema = new Schema({
   lastEditTime: {
     type: Number,
   },
-  // 显示在底部,最多4个
+  // 显示在底部,最多4个,最少两个
   label: [
     {
       type: String,
@@ -67,6 +68,11 @@ const ArticleSchema = new Schema({
     type: String,
     required: true,
   },
+  // 评分
+  score: {
+    type: Number,
+    required: true,
+  },
 });
 const Article = mongoose.model<IArticle>('Article', ArticleSchema);
 
@@ -84,7 +90,8 @@ export interface IArticle extends mongoose.Document {
   // 显示在文章下半区的小标签
   label: string[];
   // 大的分类
-  kind: IKind;
+  kind: IKind | string;
   imgPath: string[];
   location: string;
+  score: number;
 }

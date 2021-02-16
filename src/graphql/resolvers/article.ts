@@ -4,11 +4,13 @@ import {
   deleteArticle,
   getArticle,
   getArticleUserGive,
+  getGiveFiveCountArticle,
   updateArticle,
   updateArticleGive,
   updateArticleTraffic,
 } from '@/controllers/article';
 import { createComment, updateComment } from '@/controllers/comment';
+import { getkind } from '@/controllers/kind';
 import { Context } from '@/document/context';
 import { errMap, ServerError } from '@/plugins/errors';
 
@@ -19,6 +21,19 @@ export default {
       const userId = context.session.userId || '';
       const data = await Promise.all([getArticle(id), getArticleUserGive(id, userId)]);
       return Object.assign(data[0], data[1]);
+    },
+    async kind() {
+      const data = await getkind();
+      return data;
+    },
+    async giveFiveCountArticle(_: any, args: any) {
+      const { perPage, kind, page } = args;
+      const data = await getGiveFiveCountArticle({
+        perPage,
+        kind,
+        page,
+      });
+      return data;
     },
   },
   Mutation: {
