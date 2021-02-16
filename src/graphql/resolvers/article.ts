@@ -4,7 +4,7 @@ import {
   deleteArticle,
   getArticle,
   getArticleUserGive,
-  getGiveFiveCountArticle,
+  getCountArticle,
   updateArticle,
   updateArticleGive,
   updateArticleTraffic,
@@ -26,9 +26,9 @@ export default {
       const data = await getkind();
       return data;
     },
-    async giveFiveCountArticle(_: any, args: any) {
+    async articleItems(_: any, args: any) {
       const { perPage, kind, page } = args;
-      const data = await getGiveFiveCountArticle({
+      const data = await getCountArticle({
         perPage,
         kind,
         page,

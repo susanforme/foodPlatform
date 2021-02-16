@@ -2,7 +2,7 @@ type Query {
   article(id: ID!): Article!
   kind: CreateKindData!
   # 根据点赞数量排行20个
-  giveFiveCountArticle(data: GiveFiveCountArticleInput): ArticleItems!
+  articleItems(data: ArticleItemsInput): ArticleItems!
 }
 
 type Mutation {
@@ -18,7 +18,7 @@ type Mutation {
   updateComment(data: UpdateCommentData!): ID!
 }
 
-input GiveFiveCountArticleInput {
+input ArticleItemsInput {
   page: Int
   kind: String
   # 每页的个数

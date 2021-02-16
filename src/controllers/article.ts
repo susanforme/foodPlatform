@@ -56,26 +56,40 @@ export async function getArticle(id: string) {
 
 /**
  * @description
- * 根据点赞数量来排行,并且返回大概的信息,同时需要分类限制,如果没有分类则不限制
+ * 根据点赞数量来排行,并且返回大概的信息,同时需要分类限制,如果没有分类则不限制,也可以直接返回随机数据
  */
-export async function getGiveFiveCountArticle(data: GiveFiveCountArticleData) {
-  const { page = 1, kind, perPage = 20 } = data;
+export async function getCountArticle(data: GiveFiveCountArticleData) {
+  const { page = 1, kind, perPage = 20, isGive = true } = data;
   const total = await Article.find({
     kind,
   }).count();
-  const response = await Article.find({
-    kind,
-  })
-    .skip((page - 1) * 20)
-    .sort({
-      give: 1,
+  let response;
+  if (!isGive) {
+    response = await Article.aggregate()
+      .sample(perPage)
+      .lookup({
+        from: 'users',
+        localField: 'author',
+        foreignField: '_id',
+        as: 'author',
+      })
+      .project({ $id: '$_id' });
+  } else {
+    response = await Article.find({
+      kind,
     })
-    .limit(perPage)
-    .populate('author', {
-      headImg: 1,
-      username: 1,
-      id: 1,
-    });
+      .skip((page - 1) * 20)
+      .sort({
+        give: 1,
+      })
+      .limit(perPage)
+      .populate('author', {
+        headImg: 1,
+        username: 1,
+        id: 1,
+      });
+  }
+
   const sRes = response.map((v) => {
     const { imgPath, score, author, give, title, content, label, id } = v;
     const { headImg, username, id: userId } = author as IUser;
@@ -105,6 +119,8 @@ interface GiveFiveCountArticleData {
   kind?: string;
   // 每页的个数
   perPage?: number;
+  // 是否是按照点赞排
+  isGive?: boolean;
 }
 
 /**
