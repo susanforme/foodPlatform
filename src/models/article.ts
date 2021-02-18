@@ -63,7 +63,7 @@ const ArticleSchema = new Schema({
     type: Array,
     required: true,
   },
-  // location地理位置
+  // 精确经纬度
   location: {
     type: String,
     required: true,
@@ -71,6 +71,10 @@ const ArticleSchema = new Schema({
   // 评分
   score: {
     type: Number,
+    required: true,
+  },
+  cityCode: {
+    type: String,
     required: true,
   },
 });
@@ -94,4 +98,5 @@ export interface IArticle extends mongoose.Document {
   imgPath: string[];
   location: string;
   score: number;
+  cityCode: string;
 }

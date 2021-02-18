@@ -222,6 +222,7 @@ interface createArticleData {
   kind: string[];
   label: string[];
   location: string;
+  cityCode: string;
 }
 
 interface CommentData {

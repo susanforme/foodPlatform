@@ -57,8 +57,9 @@ input CreateArticleData {
   imgPath: [String!]!
   kind: [String!]!
   label: [String!]!
-  # 地理位置,经纬度
+  # 精确经纬度
   location: String!
+  cityCode: String!
 }
 
 input CreateArticleCommentData {
