@@ -1,7 +1,7 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
-import { getCaptcha } from '@/controllers/tool';
-import { getCoord, getImgByCoord, getWeather, now } from '@/plugins';
+import { getCaptcha, getCoord, getImgByCoord, getWeather } from '@/controllers/tool';
+import { now } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
 import fetch from 'node-fetch';
 
