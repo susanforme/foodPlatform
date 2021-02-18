@@ -6,6 +6,8 @@ type Query {
   # 用搜索的结果返回坐标
   coord(search: String!): CoordData!
   weather(city: String!): Weather!
+  # 根据ip定位,返回cityCode
+  ipToAddress: String!
 }
 
 type Mutation {
