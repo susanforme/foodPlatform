@@ -1,7 +1,7 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
 import { getCaptcha } from '@/controllers/tool';
-import { getWeather, now, PATH_ENV } from '@/plugins';
+import { getCoord, getWeather, now } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
 import fetch from 'node-fetch';
 
@@ -24,11 +24,8 @@ export default {
     },
     async coord(_: any, args: any) {
       const search = encodeURI(args.search);
-      const data = await fetch(`
-      https://restapi.amap.com/v3/config/district?keywords=${search}&subdistrict=0&key=${PATH_ENV.MY_GD_SERVER_KEY}`).then(
-        (res) => res.json(),
-      );
-      return data.districts[0];
+      const data = await getCoord(search);
+      return data;
     },
     async weather(_: any, args: any) {
       const data = await getWeather(args.city);

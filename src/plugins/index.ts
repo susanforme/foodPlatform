@@ -54,6 +54,18 @@ export async function getWeather(adcode: string) {
 
 /**
  * @description
+ * 获取坐标
+ */
+export async function getCoord(search: string) {
+  const data = await fetch(`
+      https://restapi.amap.com/v3/place/text?key=${PATH_ENV.MY_GD_SERVER_KEY}&keywords=${search}&types=&city=&children=1&offset=1&page=1&extensions=all`).then(
+    (res) => res.json(),
+  );
+  return data?.pois[0];
+}
+
+/**
+ * @description
  * 随机数生成
  * @param count 生成随机数数量
  * @param isInteger 是否为整数
