@@ -6,6 +6,7 @@ import { IComment } from '@/models/comment';
 import session from 'express-session';
 import mongo from 'connect-mongo';
 import mongoose from 'mongoose';
+import BASE64 from 'base64-js';
 
 export function getIsDev() {
   return process.env.NODE_ENV === 'development';
@@ -62,6 +63,13 @@ export async function getCoord(search: string) {
     (res) => res.json(),
   );
   return data?.pois[0];
+}
+
+export async function getImgByCoord(location: string) {
+  const data = await fetch(
+    `https://restapi.amap.com/v3/staticmap?location=${location}&zoom=10&size=750*300&markers=large,,A:116.481485,39.990464&key=${PATH_ENV.MY_GD_SERVER_KEY}&scale=2`,
+  ).then((res) => res.buffer());
+  return 'data:image/png;base64,' + BASE64.fromByteArray(data);
 }
 
 /**

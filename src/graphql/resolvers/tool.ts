@@ -1,7 +1,7 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
 import { getCaptcha } from '@/controllers/tool';
-import { getCoord, getWeather, now } from '@/plugins';
+import { getCoord, getImgByCoord, getWeather, now } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
 import fetch from 'node-fetch';
 
@@ -30,6 +30,10 @@ export default {
     async weather(_: any, args: any) {
       const data = await getWeather(args.city);
       return data;
+    },
+    async imgByCoord(_: any, args: any) {
+      const url = await getImgByCoord(args.location);
+      return url;
     },
   },
   Mutation: {

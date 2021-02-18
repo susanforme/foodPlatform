@@ -6,6 +6,8 @@ type Query {
   # 用搜索的结果返回坐标
   coord(search: String!): CoordData!
   weather(city: String!): Weather!
+  # 通过左边返回静态图片
+  imgByCoord(location: String!): String!
 }
 
 type Mutation {
