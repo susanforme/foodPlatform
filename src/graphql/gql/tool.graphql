@@ -23,7 +23,7 @@ type Weather {
 type CoordData {
   location: String!
   name: String!
-  citycode: String!
+  cityCode: String!
 }
 
 type CaptchaData {

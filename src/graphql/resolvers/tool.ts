@@ -25,7 +25,10 @@ export default {
     async coord(_: any, args: any) {
       const search = encodeURI(args.search);
       const data = await getCoord(search);
-      return data;
+      return {
+        ...data,
+        cityCode: data?.citycode,
+      };
     },
     async weather(_: any, args: any) {
       const data = await getWeather(args.city);
