@@ -219,9 +219,10 @@ interface createArticleData {
   title: string;
   content: string;
   imgPath: string[];
-  kind: string[];
+  kind: string;
   label: string[];
   location: string;
+  score: number;
   cityCode: string;
 }
 

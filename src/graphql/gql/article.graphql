@@ -55,10 +55,12 @@ input CreateArticleData {
   title: String!
   content: String!
   imgPath: [String!]!
-  kind: [String!]!
+  kind: String!
   label: [String!]!
   # 精确经纬度
   location: String!
+  score: Int!
+  # 用来给城市分类返回文章的
   cityCode: String!
 }
 
@@ -90,7 +92,7 @@ type Article {
   # 显示在文章下半区的小标签
   label: [String]!
   # 大的分类
-  kind: [String!]!
+  kind: String!
   imgPath: [String!]!
   isGive: Boolean!
   giveCount: Int!
