@@ -60,24 +60,34 @@ export async function getArticle(id: string) {
  */
 export async function getCountArticle(data: GiveFiveCountArticleData) {
   const { page = 1, kind, perPage = 20, isGive = true } = data;
-  const total = await Article.find({
-    kind,
-  }).count();
+  const search = kind
+    ? {
+        kind,
+      }
+    : {};
+  const total = await Article.find(search).countDocuments();
   let response;
   if (!isGive) {
-    response = await Article.aggregate()
-      .sample(perPage)
-      .lookup({
-        from: 'users',
-        localField: 'author',
-        foreignField: '_id',
-        as: 'author',
-      })
-      .project({ $id: '$_id' });
+    response = await Article.aggregate([
+      {
+        $sample: {
+          size: perPage,
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'author',
+          foreignField: '_id',
+          as: 'author',
+        },
+      },
+      {
+        $unwind: '$author',
+      },
+    ]);
   } else {
-    response = await Article.find({
-      kind,
-    })
+    response = await Article.find(search)
       .skip((page - 1) * 20)
       .sort({
         give: 1,
@@ -89,10 +99,9 @@ export async function getCountArticle(data: GiveFiveCountArticleData) {
         id: 1,
       });
   }
-
   const sRes = response.map((v) => {
-    const { imgPath, score, author, give, title, content, label, id } = v;
-    const { headImg, username, id: userId } = author as IUser;
+    const { imgPath, score, author, give, title, content, label, _id: id } = v;
+    const { headImg, username, _id: userId } = author as IUser;
     return {
       img: imgPath[0],
       score,

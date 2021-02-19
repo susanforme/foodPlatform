@@ -19,10 +19,13 @@ type Mutation {
 }
 
 input ArticleItemsInput {
+  # 页码
   page: Int
   kind: String
   # 每页的个数
   perPage: Int
+  # 是否安装点赞排序
+  isGive: Boolean
 }
 type ArticleItems {
   items: [SingleArticleItem!]!

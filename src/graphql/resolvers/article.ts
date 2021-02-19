@@ -27,11 +27,15 @@ export default {
       return data;
     },
     async articleItems(_: any, args: any) {
-      const { perPage, kind, page } = args;
+      const { perPage, kind, page, isGive } = args.data;
       const data = await getCountArticle({
+        // 每页个数
         perPage,
         kind,
+        // 页码
         page,
+        // 是否安装点赞排序
+        isGive,
       });
       return data;
     },
