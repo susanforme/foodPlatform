@@ -18,6 +18,10 @@ export default {
   Query: {
     async article(_: any, args: any, context: Context) {
       const id = args.id;
+      // 同时增加浏览量
+      updateArticleTraffic(id).catch((err) => {
+        console.log(err);
+      });
       const userId = context.session.userId || '';
       const data = await Promise.all([getArticle(id), getArticleUserGive(id, userId)]);
       return Object.assign(data[0], data[1]);

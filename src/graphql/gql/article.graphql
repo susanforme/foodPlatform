@@ -101,6 +101,7 @@ type Article {
   giveCount: Int!
   # 位置
   location: String!
+  cityCode: String!
 }
 
 type Author {
