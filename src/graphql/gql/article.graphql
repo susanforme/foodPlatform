@@ -102,6 +102,7 @@ type Article {
   # 位置
   location: String!
   cityCode: String!
+  score: Int!
 }
 
 type Author {
