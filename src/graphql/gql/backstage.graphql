@@ -2,9 +2,14 @@
 
 type Mutation {
   createKind(kindName: String!): CreateKindData!
+  createEmoji(emoji: [String!]!): [EmojiData]!
 }
 
 type CreateKindData {
   kindName: String!
   id: String!
+}
+
+type EmojiData {
+  content: String!
 }

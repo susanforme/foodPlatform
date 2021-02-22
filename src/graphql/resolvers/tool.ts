@@ -1,5 +1,6 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
+import { getEmoji } from '@/controllers/emoji';
 import { getCaptcha, getCoord, getImgByCoord, getWeather } from '@/controllers/tool';
 import { now } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
@@ -37,6 +38,11 @@ export default {
     async imgByCoord(_: any, args: any) {
       const url = await getImgByCoord(args.location);
       return url;
+    },
+    async emoji(_: any, args: any) {
+      const { page, perPage } = args;
+      const emoji = await getEmoji(page, perPage);
+      return emoji;
     },
   },
   Mutation: {

@@ -8,12 +8,21 @@ type Query {
   weather(city: String!): Weather!
   # 通过左边返回静态图片
   imgByCoord(location: String!): String!
+  # emoji
+  emoji(data: EmojiInput): [EmojiData!]!
 }
 
 type Mutation {
   singleUpload(file: Upload!): File!
 }
 
+input EmojiInput {
+  page: Int
+  perPage: Int
+}
+type EmojiData {
+  content: String!
+}
 # 天气
 type Weather {
   temperature: String!
