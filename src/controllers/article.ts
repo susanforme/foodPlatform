@@ -1,7 +1,5 @@
 import Article from '@/models/article';
-import { IComment } from '@/models/comment';
 import { IUser } from '@/models/user';
-import { getCommentTree } from '@/plugins';
 import { errMap, ServerError } from '@/plugins/errors';
 
 /**
@@ -26,30 +24,15 @@ export async function createArticle(data: createArticleData) {
  * 查询文章
  */
 export async function getArticle(id: string) {
-  const product = await Article.findById(id, { give: 0 })
-    .populate('author', {
-      headImg: 1,
-      username: 1,
-      id: 1,
-    })
-    .populate({
-      path: 'comment',
-      select: ['createTime', 'img', 'lastEditTime', 'comment', 'publisher', 'commentFatherId'],
-      model: 'Comment',
-      populate: {
-        path: 'publisher',
-        model: 'User',
-        select: ['headImg', 'username', '_id'],
-      },
-    });
-
+  const product = await Article.findById(id, { give: 0, comment: 0 }).populate('author', {
+    headImg: 1,
+    username: 1,
+    id: 1,
+  });
   if (!product) {
     throw new ServerError(errMap.article.A0001);
   }
-  const data = Object.assign(product, {
-    comment: getCommentTree(product?.comment as IComment[]),
-  });
-  return data;
+  return product;
 }
 
 /**

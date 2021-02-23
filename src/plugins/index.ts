@@ -74,7 +74,11 @@ export function getCommentTree(comment: IComment[]) {
     const childFather = v.commentFatherId?.toString();
     for (let i = 0; i < father.length; i++) {
       if (childFather === father[i].id) {
-        father[i].commentChild = v;
+        if (father[i].commentChild) {
+          father[i].commentChild?.push(v);
+        } else {
+          father[i].commentChild = [v];
+        }
         return;
       }
     }

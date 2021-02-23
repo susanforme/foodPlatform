@@ -1,4 +1,28 @@
 import Comment from '@/models/comment';
+import { getCommentTree } from '@/plugins';
+
+/**
+ * @description
+ * 查询评论
+ */
+export async function getComment(articleId: string) {
+  const comment = await Comment.find(
+    { articleId },
+    {
+      createTime: 1,
+      img: 1,
+      lastEditTime: 1,
+      comment: 1,
+      publisher: 1,
+      commentFatherId: 1,
+    },
+  ).populate('publisher', {
+    headImg: 1,
+    username: 1,
+    id: 1,
+  });
+  return getCommentTree(comment);
+}
 
 /**
  * @description

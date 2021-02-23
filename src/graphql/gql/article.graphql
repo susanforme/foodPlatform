@@ -3,6 +3,8 @@ type Query {
   kind: [CreateKindData]!
   # 根据点赞数量排行20个
   articleItems(data: ArticleItemsInput): ArticleItems!
+  # 根据文章id查询评论
+  comment(articleId: ID!): [ArticleComment]!
 }
 
 type Mutation {
@@ -89,7 +91,6 @@ type Article {
   title: String!
   content: String!
   traffic: Int!
-  comment: [ArticleComment]!
   lastEditTime: BigInt
   # 显示在文章下半区的小标签
   label: [String]!
@@ -115,8 +116,7 @@ type ArticleComment {
   publisher: Author!
   comment: String!
   lastEditTime: BigInt
-  commentFatherId: String
-  commentChild: ArticleComment
+  commentChild: [ArticleComment]
   img: String
   id: ID!
 }

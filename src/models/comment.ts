@@ -53,6 +53,6 @@ export interface IComment extends mongoose.Document {
   lastEditTime?: number;
   commentFatherId?: string;
   // 数据库中并不存在,目的是为了添加到返回数据中
-  commentChild?: IComment;
+  commentChild?: [IComment];
   img?: string;
 }
