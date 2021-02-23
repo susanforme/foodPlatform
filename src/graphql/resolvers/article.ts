@@ -87,12 +87,6 @@ export default {
       await createArticleComment({ articleId, commentId: response.id });
       return response.id;
     },
-    // 访问量
-    async updateArticleTraffic(_: any, args: any) {
-      const id = args.id;
-      const traffic = await updateArticleTraffic(id);
-      return traffic;
-    },
     // 点赞文章
     async updateArticleGive(_: any, args: any, context: Context) {
       const articleId = args.id;

@@ -11,7 +11,6 @@ type Mutation {
   updateArticle(data: UpdateArticleData!): ChangeArticleRes!
   deleteArticle(id: ID!): ResponseData!
   createArticleComment(data: CreateArticleCommentData!): ID!
-  updateArticleTraffic(id: ID!): Int!
   # 点赞文章
   updateArticleGive(id: ID!): Int!
   # 修改评论
@@ -115,7 +114,6 @@ type ArticleComment {
   createTime: BigInt!
   publisher: Author!
   comment: String!
-  articleId: String!
   lastEditTime: BigInt
   commentFatherId: String
   commentChild: ArticleComment

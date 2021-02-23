@@ -71,10 +71,10 @@ export function getCommentTree(comment: IComment[]) {
   const father = comment.filter((v) => v.commentFatherId === undefined),
     child = comment.filter((v) => v.commentFatherId !== undefined);
   child.forEach((v) => {
-    const childFather = v.commentFatherId;
-    for (const key in father) {
-      if (childFather === father[key].id) {
-        father[key].commentChild = v;
+    const childFather = v.commentFatherId?.toString();
+    for (let i = 0; i < father.length; i++) {
+      if (childFather === father[i].id) {
+        father[i].commentChild = v;
         return;
       }
     }
