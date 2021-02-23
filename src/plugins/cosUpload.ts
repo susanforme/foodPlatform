@@ -25,7 +25,7 @@ async function cosUpload(options: Options) {
     throw new ServerError(errMap.upload.U1001);
   }
   return {
-    url: result.Location,
+    url: `/img/public/${time}/${filename + timeHash}`,
   };
 }
 
