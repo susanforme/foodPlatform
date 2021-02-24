@@ -4,7 +4,7 @@ import {
   deleteArticle,
   getArticle,
   getArticleUserGive,
-  getCountArticle,
+  getSortArticle,
   updateArticle,
   updateArticleGive,
   updateArticleTraffic,
@@ -37,7 +37,7 @@ export default {
     },
     async articleItems(_: any, args: any) {
       const { perPage, kind, page, isGive } = args.data;
-      const data = await getCountArticle({
+      const data = await getSortArticle({
         // 每页个数
         perPage,
         kind,

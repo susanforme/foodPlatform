@@ -26,6 +26,24 @@ export async function getComment(articleId: string) {
 
 /**
  * @description
+ * 获取该用户发表的评论
+ */
+export async function getCommentByUserId(userId: string) {
+  const comments = await Comment.find(
+    { publisher: userId },
+    {
+      createTime: 1,
+      comment: 1,
+      articleId: 1,
+    },
+  ).populate('articleId', {
+    content: 1,
+  });
+  return comments;
+}
+
+/**
+ * @description
  * 创建评论,同时需要article配合
  */
 export async function createComment(data: CreateCommentData) {

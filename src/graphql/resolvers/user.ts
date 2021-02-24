@@ -1,5 +1,8 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
+import { getFoodTagsByUserId, getSortArticle } from '@/controllers/article';
+import { getCommentByUserId } from '@/controllers/comment';
+import { getDiscussByUserId } from '@/controllers/record';
 import {
   createUser,
   deleteUser,
@@ -15,8 +18,23 @@ import { errMap, ServerError } from '@/plugins/errors';
 export default {
   Query: {
     async user(_: any, args: any) {
-      const response = await getUserById(args.id);
-      return response;
+      const id = args.id;
+      const response = await Promise.all([
+        getUserById(id),
+        getDiscussByUserId(id),
+        getFoodTagsByUserId(id),
+        getSortArticle({ userId: id }),
+        getCommentByUserId(id),
+      ]);
+      return {
+        user: response[0],
+        discuss: response[1],
+        foodTags: response[2],
+        article: response[3],
+        articleCount: response[3].total,
+        comment: response[4],
+        commentCount: response[4].length,
+      };
     },
   },
   Mutation: {

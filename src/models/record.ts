@@ -35,8 +35,8 @@ const Record = mongoose.model<IRecord>('Record', RecordSchema);
 export default Record;
 
 interface IRecord extends mongoose.Document {
-  send: IUser;
-  receive: IUser;
+  send: IUser | string;
+  receive: IUser | string;
   message: string;
   createTime: number;
   roomId: string;

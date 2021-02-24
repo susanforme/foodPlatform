@@ -1,6 +1,6 @@
 scalar BigInt
 type Query {
-  user(id: ID!): User
+  user(id: ID!): UserData!
 }
 
 type Mutation {
@@ -9,6 +9,28 @@ type Mutation {
   remove(id: ID!): RemoveData
   # 通过session登录
   loginBySession: User
+}
+
+type UserData {
+  user: Author!
+  discuss: UserDiscussData!
+  foodTags: [String]!
+  article: ArticleItems!
+  articleCount: Int!
+  comment: [UserCommentData]!
+  commentCount: Int!
+}
+type UserDiscussData {
+  attention: Int!
+  fan: Int!
+}
+type UserCommentData {
+  createTime: BigInt!
+  comment: String!
+  articleId: UserArticleIdData!
+}
+type UserArticleIdData {
+  content: String!
 }
 
 # 不要错误定义为接口,接口必须要有具体实现

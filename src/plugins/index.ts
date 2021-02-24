@@ -112,3 +112,22 @@ export const mySession = (function createSession() {
     saveUninitialized: true,
   });
 })();
+
+/**
+ * @description
+ * 获取一个非空对象
+ */
+export function getNotEmptyObject(o: AllObj) {
+  const newO: AllObj = {};
+  for (const key in o) {
+    const v = o[key];
+    if (!Object.is(undefined, v) && !Object.is(null, v)) {
+      newO[key] = v;
+    }
+  }
+  return newO;
+}
+
+interface AllObj {
+  [k: string]: any;
+}

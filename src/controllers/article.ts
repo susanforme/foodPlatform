@@ -1,5 +1,6 @@
 import Article from '@/models/article';
 import { IUser } from '@/models/user';
+import { getNotEmptyObject } from '@/plugins';
 import { errMap, ServerError } from '@/plugins/errors';
 
 /**
@@ -37,15 +38,32 @@ export async function getArticle(id: string) {
 
 /**
  * @description
+ * 获取美食标签通过用户id.最多4个
+ */
+export async function getFoodTagsByUserId(userId: string) {
+  const product = await Article.find({ author: userId });
+  const data = product.map((v) => {
+    return v.label[Math.round(Math.random() * v.label.length)];
+  });
+  return data.slice(0, 4);
+}
+
+/**
+ * @description
+ * 获取当前用户发表文章的数目
+ */
+export async function getArticleCountByUserId(userId: string) {
+  const product = await Article.find({ author: userId }).countDocuments();
+  return product;
+}
+
+/**
+ * @description
  * 根据点赞数量来排行,并且返回大概的信息,同时需要分类限制,如果没有分类则不限制,也可以直接返回随机数据
  */
-export async function getCountArticle(data: GiveFiveCountArticleData) {
-  const { page = 1, kind, perPage = 20, isGive = true } = data;
-  const search = kind
-    ? {
-        kind,
-      }
-    : {};
+export async function getSortArticle(data: GiveFiveCountArticleData) {
+  const { page = 1, kind, perPage = 20, isGive = true, userId } = data;
+  const search = getNotEmptyObject({ kind, author: userId });
   const total = await Article.find(search).countDocuments();
   let response;
   if (!isGive) {
@@ -111,6 +129,8 @@ interface GiveFiveCountArticleData {
   perPage?: number;
   // 是否是按照点赞排
   isGive?: boolean;
+  // 是否查询userId
+  userId?: string;
 }
 
 /**
