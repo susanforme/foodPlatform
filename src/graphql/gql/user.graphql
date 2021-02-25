@@ -31,6 +31,8 @@ type UserCommentData {
 }
 type UserArticleIdData {
   content: String!
+  id: ID!
+  imgPath: [String!]!
 }
 
 # 不要错误定义为接口,接口必须要有具体实现

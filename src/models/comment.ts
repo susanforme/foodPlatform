@@ -19,6 +19,7 @@ const CommentSchema = new Schema({
   },
   articleId: {
     type: Schema.Types.ObjectId,
+    ref: 'Article',
     required: true,
   },
   // 可以被编辑,最后编辑时间,没有则不提示

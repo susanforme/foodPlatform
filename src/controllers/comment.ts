@@ -38,6 +38,8 @@ export async function getCommentByUserId(userId: string) {
     },
   ).populate('articleId', {
     content: 1,
+    id: 1,
+    imgPath: 1,
   });
   return comments;
 }
