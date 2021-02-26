@@ -128,6 +128,16 @@ export function getNotEmptyObject(o: AllObj) {
   return newO;
 }
 
+export function getNotEmptyArray(ary: Array<any>) {
+  const newAry: any[] = [];
+  for (const v of ary) {
+    if (!Object.is(undefined, v) && !Object.is(null, v)) {
+      newAry.push(v);
+    }
+  }
+  return newAry;
+}
+
 interface AllObj {
   [k: string]: any;
 }

@@ -1,7 +1,7 @@
 import Record from '@/models/record';
 import Room from '@/models/room';
 import { IUser } from '@/models/user';
-import { getRoomId } from '@/plugins';
+import { getNotEmptyArray, getRoomId } from '@/plugins';
 
 /**
  * @description
@@ -39,26 +39,41 @@ export async function updateRecord(uploadRecordData: UploadRecordData) {
  * 根据id获取 整个聊天列表
  */
 export async function getPersonalChatList(id: string) {
-  const data = await Room.find({ user: id }, 'user')
+  const data = await Room.find(
+    { user: id },
+    {
+      user: 1,
+      record: { $slice: -1 },
+    },
+  )
     .populate('user', {
       headImg: 1,
       username: 1,
       id: 1,
     })
+    .populate('record', {
+      message: 1,
+      createTime: 1,
+      img: 1,
+    })
     .sort({ lastActiveTime: 1 })
     .limit(10);
-  const body = data
-    .map((v) => {
-      return (v.user as IUser[]).filter((v) => v.id !== id)[0];
-    })
-    .map((v) => {
-      const { username, headImg, id } = v;
-      return {
-        username,
-        headImg,
-        id,
-      };
-    });
+  const body = getNotEmptyArray(
+    data.map((v) => {
+      const other = (v.user as IUser[]).filter((v) => v.id !== id)[0];
+      if (v && other) {
+        const { username, headImg, id: userId } = other;
+        return {
+          user: {
+            username,
+            headImg,
+            id: userId,
+          },
+          record: v.record[0] || {},
+        };
+      }
+    }),
+  );
   return body;
 }
 

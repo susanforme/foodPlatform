@@ -104,5 +104,16 @@ export default {
         location: adcode,
       });
     },
+    async logout(_: any, __: any, context: Context) {
+      const data = await new Promise((resolve, reject) => {
+        context.session.destroy((err: any) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(true);
+        });
+      });
+      return data;
+    },
   },
 };

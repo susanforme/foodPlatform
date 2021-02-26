@@ -54,7 +54,7 @@ if (config.ssl) {
   server = http.createServer(app);
 }
 
-const socketServer = socket(server);
+const socketServer = socket(server, { wsEngine: 'ws' });
 
 mongoose
   .connect('mongodb://localhost:27017/food', {

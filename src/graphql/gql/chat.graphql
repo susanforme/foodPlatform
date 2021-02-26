@@ -1,5 +1,5 @@
 type Query {
-  messageList(id: ID!): [MsgListData]
+  messageList(id: ID!): [MsgListData]!
   chatHistory(data: ChatHistoryInput): [Record]
 }
 type Mutation {
@@ -13,9 +13,14 @@ input ChatHistoryInput {
 }
 
 type MsgListData {
-  username: String
-  headImg: String
-  id: ID!
+  user: Author
+  record: MsgListRecordData!
+}
+type MsgListRecordData {
+  message: String
+  id: String
+  createTime: BigInt
+  img: String
 }
 
 type Record {
