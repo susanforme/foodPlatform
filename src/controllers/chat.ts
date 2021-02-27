@@ -85,11 +85,11 @@ export async function queryPersonalHistoryChat(roomId: string, page = 1) {
   const data = await Record.find({ roomId })
     .skip((page - 1) * 20)
     .sort({
-      createTime: 1,
+      createTime: -1,
     })
     .limit(20);
 
-  return data;
+  return data.sort((a, b) => a.createTime - b.createTime);
 }
 
 /**

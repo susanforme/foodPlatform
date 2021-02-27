@@ -14,7 +14,7 @@ export default {
       return data;
     },
     async chatHistory(_: any, args: any, context: Context) {
-      const { me, other, page } = args;
+      const { me, other, page } = args.data;
       if (context.session.userId !== me) {
         throw new ServerError(errMap.chat.C0001);
       }

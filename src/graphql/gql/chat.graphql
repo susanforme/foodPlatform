@@ -1,6 +1,6 @@
 type Query {
   messageList(id: ID!): [MsgListData]!
-  chatHistory(data: ChatHistoryInput): [Record]
+  chatHistory(data: ChatHistoryInput!): [Record]
 }
 type Mutation {
   deleteRoom(id: ID!): ResponseData
@@ -9,7 +9,7 @@ type Mutation {
 input ChatHistoryInput {
   me: ID!
   other: ID!
-  page: Int!
+  page: Int
 }
 
 type MsgListData {
