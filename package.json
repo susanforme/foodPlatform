@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' -e ts --exec 'ts-node' --files ./src/app.ts",
-    "serve": "cross-env NODE_ENV=production node ./app.js",
-    "build": "tsc && gulp copy && gulp compress && gulp clean",
+    "serve": "cross-env NODE_ENV=production node ./dist/app.js",
+    "build": "tsc && gulp copy",
     "clean": "gulp clean",
     "test": "gulp cleanTest && jest ",
     "lint": "eslint ./**/*.ts --ext  .ts --cache --fix"

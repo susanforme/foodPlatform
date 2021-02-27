@@ -1,16 +1,9 @@
 const gulp = require('gulp');
 const del = require('del');
-const replace = require('gulp-replace');
 const zip = require('gulp-zip');
 // 编译同时复制到dist目录
 function copyGql() {
   return gulp.src(['src/graphql/gql/*']).pipe(gulp.dest('dist/graphql/gql'));
-}
-function copyPackage() {
-  return gulp.src('package.json').pipe(replace(/src/g, '.')).pipe(gulp.dest('dist'));
-}
-function copyBin() {
-  return gulp.src(['bin/.env', 'cert/*'], { base: '.' }).pipe(gulp.dest('dist'));
 }
 
 function clean(cb) {
@@ -28,7 +21,7 @@ function compress() {
 function cleanTest(cb) {
   return del(['test/__snapshots__/*'], cb);
 }
-const copy = gulp.parallel(copyGql, copyPackage, copyBin);
+const copy = gulp.parallel(copyGql);
 module.exports = {
   default: copy,
   copy,
