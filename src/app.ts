@@ -37,6 +37,9 @@ const apollo = new ApolloServer({
 });
 const app = express();
 
+app.use('/graphql/hi', (req, res) => {
+  res.send('hi');
+});
 app.use(mySession);
 app.use(
   graphqlUploadExpress({
