@@ -20,7 +20,7 @@ import setWs from './plugins/ws';
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
 const options = { key, cert };
-const config = configurations[process.env.NODE_ENV as NODE_ENV];
+const config = configurations[(process.env.NODE_ENV as NODE_ENV) || 'production'];
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
