@@ -37,9 +37,6 @@ const apollo = new ApolloServer({
 });
 const app = express();
 
-app.use('/graphql/hi', (req, res) => {
-  res.send('hi');
-});
 app.use(mySession);
 app.use(
   graphqlUploadExpress({
@@ -70,7 +67,7 @@ mongoose
   .then(() => {
     console.log(`${now()},数据库连接成功`);
     setWs(socketServer);
-    server.listen(config.port, () => {
+    server.listen(config.port, '127.0.0.1', () => {
       console.log(`${now()},websocket服务启动成功`);
       console.log(
         `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${
@@ -78,4 +75,7 @@ mongoose
         }/graphql`,
       );
     });
+  })
+  .catch((err) => {
+    console.log(err?.message);
   });
