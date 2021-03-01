@@ -29,6 +29,7 @@ const apollo = new ApolloServer({
   plugins: [responseCachePlugin()],
   uploads: false,
   context,
+  // 生产false关闭
   playground: {
     settings: {
       'request.credentials': 'include',

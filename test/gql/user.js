@@ -4,7 +4,9 @@ module.exports = {
   user: gql`
     query getUser($id: ID!) {
       user(id: $id) {
-        username
+        user {
+          username
+        }
       }
     }
   `,
