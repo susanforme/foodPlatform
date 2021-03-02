@@ -37,8 +37,8 @@ export async function ipToAddress(ip: string) {
 
   console.log(`${now()} 当前账户访问ip为` + newIp);
   return {
-    adcode: address.adcode,
-    city: address.city,
+    adcode: address?.adcode || '510700',
+    city: address?.city,
   };
 }
 
