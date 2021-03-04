@@ -22,7 +22,8 @@ const server = new ApolloServer({
   context,
 });
 
-const PATH_ENV = dotenv.config({ path: path.join(process.cwd(), '/bin/.env') }).parsed || {};
+const PATH_ENV =
+  dotenv.config({ path: path.join(process.cwd(), '/bin/.env') }).parsed || {};
 
 module.exports = {
   server,

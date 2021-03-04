@@ -1,4 +1,8 @@
-import { deleteRoom, getPersonalChatList, queryPersonalHistoryChat } from '@/controllers/chat';
+import {
+  deleteRoom,
+  getPersonalChatList,
+  queryPersonalHistoryChat,
+} from '@/controllers/chat';
 import { Context } from '@/document/context';
 import { getRoomId } from '@/plugins';
 import { errMap, ServerError } from '@/plugins/errors';

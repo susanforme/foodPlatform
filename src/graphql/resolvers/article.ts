@@ -9,7 +9,11 @@ import {
   updateArticleGive,
   updateArticleTraffic,
 } from '@/controllers/article';
-import { createComment, getComment, updateComment } from '@/controllers/comment';
+import {
+  createComment,
+  getComment,
+  updateComment,
+} from '@/controllers/comment';
 import { getkind } from '@/controllers/kind';
 import { Context } from '@/document/context';
 import { errMap, ServerError } from '@/plugins/errors';
@@ -23,7 +27,10 @@ export default {
         console.log(err);
       });
       const userId = context.session.userId || '';
-      const data = await Promise.all([getArticle(id), getArticleUserGive(id, userId)]);
+      const data = await Promise.all([
+        getArticle(id),
+        getArticleUserGive(id, userId),
+      ]);
       return Object.assign(data[0], data[1]);
     },
     async comment(_: any, args: any) {
@@ -95,7 +102,10 @@ export default {
     // 点赞文章
     async updateArticleGive(_: any, args: any, context: Context) {
       const articleId = args.id;
-      const giveCount = await updateArticleGive(articleId, context.session.userId);
+      const giveCount = await updateArticleGive(
+        articleId,
+        context.session.userId,
+      );
       return giveCount;
     },
     // 修改评论

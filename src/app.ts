@@ -20,7 +20,8 @@ import setWs from './plugins/ws';
 const cert = readFileSync(join(__dirname, '../cert/cert.pem'));
 const key = readFileSync(join(__dirname, '../cert/key.pem'));
 const options = { key, cert };
-const config = configurations[(process.env.NODE_ENV as NODE_ENV) || 'production'];
+const config =
+  configurations[(process.env.NODE_ENV as NODE_ENV) || 'production'];
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
@@ -71,9 +72,9 @@ mongoose
     server.listen(config.port, '127.0.0.1', () => {
       console.log(`${now()},websocket服务启动成功`);
       console.log(
-        `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${config.hostname}:${
-          config.port
-        }/graphql`,
+        `${now()},服务器成功启动在http${config.ssl ? 's' : ''}://${
+          config.hostname
+        }:${config.port}/graphql`,
       );
     });
   })

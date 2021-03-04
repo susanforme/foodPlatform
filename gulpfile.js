@@ -7,7 +7,10 @@ function copyGql() {
 }
 
 function clean(cb) {
-  return del(['dist', 'yarn-error.log', '.eslintcache', 'test/__snapshots__/*'], cb);
+  return del(
+    ['dist', 'yarn-error.log', '.eslintcache', 'test/__snapshots__/*'],
+    cb,
+  );
 }
 
 function compress() {

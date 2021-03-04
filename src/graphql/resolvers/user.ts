@@ -64,7 +64,10 @@ export default {
       // 在客户端,两个参数都必须传,不需要那个传递空字符串
       const { username, password, email } = args.data;
       const data = username ? { username, password } : { email, password };
-      const response = await Promise.all([loginByData(data), ipToAddress(context.ip)]);
+      const response = await Promise.all([
+        loginByData(data),
+        ipToAddress(context.ip),
+      ]);
       const { adcode } = response[1];
       updateUserLocation(context.session.userId, response[1].city);
       // 输入session
@@ -86,7 +89,9 @@ export default {
       }
       const response = await deleteUser(id);
       context.session?.destroy(() => {
-        console.log(`${now()} id为${id},username为${username}的账户已经注销成功,并成功清除session`);
+        console.log(
+          `${now()} id为${id},username为${username}的账户已经注销成功,并成功清除session`,
+        );
       });
       return response;
     },
@@ -97,7 +102,10 @@ export default {
         return errMap.user.U0008;
       }
       console.log(`${now()},username为${username}登录成功`);
-      const response = await Promise.all([getUserByUsername(username), ipToAddress(context.ip)]);
+      const response = await Promise.all([
+        getUserByUsername(username),
+        ipToAddress(context.ip),
+      ]);
       const { adcode } = response[1];
       updateUserLocation(context.session.userId, response[1].city);
       return Object.assign(response[0], {

@@ -1,7 +1,12 @@
 // https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments
 
 import { getEmoji } from '@/controllers/emoji';
-import { getCaptcha, getCoord, getImgByCoord, getWeather } from '@/controllers/tool';
+import {
+  getCaptcha,
+  getCoord,
+  getImgByCoord,
+  getWeather,
+} from '@/controllers/tool';
 import { now } from '@/plugins';
 import cosUpload from '@/plugins/cosUpload';
 import fetch from 'node-fetch';
@@ -19,7 +24,9 @@ export default {
       ).then((res) => res.json());
       const randomNum = Math.round(Math.random() * total);
       const data = await fetch(
-        `https://image.so.com/j?q=${search}&src=srp&sn=${randomNum - 1}&pn=1&zoom=1`,
+        `https://image.so.com/j?q=${search}&src=srp&sn=${
+          randomNum - 1
+        }&pn=1&zoom=1`,
       ).then((res) => res.json());
       return data.list[0].img;
     },

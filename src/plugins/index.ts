@@ -11,7 +11,8 @@ export function getIsDev() {
   return process.env.NODE_ENV === 'development';
 }
 
-export const PATH_ENV = dotenv.config({ path: join(process.cwd(), '/bin/.env') }).parsed || {};
+export const PATH_ENV =
+  dotenv.config({ path: join(process.cwd(), '/bin/.env') }).parsed || {};
 
 export const now = () => dayjs().format('YYYY-MM-DD H时mm分s秒');
 
@@ -50,7 +51,12 @@ export async function ipToAddress(ip: string) {
  * @param low 下边界
  * @param high 上边界
  */
-export function getRandomNums(count: number, isInteger: boolean, low: number, high: number) {
+export function getRandomNums(
+  count: number,
+  isInteger: boolean,
+  low: number,
+  high: number,
+) {
   const randomNums: number[] = [];
   for (let i = 0; i < count; i++) {
     const num = Math.random() * (high - low) + low;
@@ -88,12 +94,15 @@ export function getCommentTree(comment: IComment[]) {
 
 export const mySession = (function createSession() {
   const MongoStore = mongo(session);
-  const connection = mongoose.createConnection('mongodb://localhost:27017/food', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    user: PATH_ENV.DATA_BASE_FOOD_ACCOUNT,
-    pass: PATH_ENV.DATA_BASE_FOOD_PASSWORD,
-  });
+  const connection = mongoose.createConnection(
+    'mongodb://localhost:27017/food',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      user: PATH_ENV.DATA_BASE_FOOD_ACCOUNT,
+      pass: PATH_ENV.DATA_BASE_FOOD_PASSWORD,
+    },
+  );
 
   return session({
     secret: 'food platform',

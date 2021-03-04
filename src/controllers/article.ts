@@ -25,11 +25,14 @@ export async function createArticle(data: createArticleData) {
  * 查询文章
  */
 export async function getArticle(id: string) {
-  const product = await Article.findById(id, { give: 0, comment: 0 }).populate('author', {
-    headImg: 1,
-    username: 1,
-    id: 1,
-  });
+  const product = await Article.findById(id, { give: 0, comment: 0 }).populate(
+    'author',
+    {
+      headImg: 1,
+      username: 1,
+      id: 1,
+    },
+  );
   if (!product) {
     throw new ServerError(errMap.article.A0001);
   }

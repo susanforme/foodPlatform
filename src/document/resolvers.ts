@@ -5,7 +5,9 @@ import { getIsDev } from '@/plugins';
 import scalar from './scalar';
 
 const someResolvers = mergeResolvers(
-  loadFilesSync(join(__dirname, `../graphql/resolvers/**/*.${getIsDev() ? 'ts' : 'js'}`)),
+  loadFilesSync(
+    join(__dirname, `../graphql/resolvers/**/*.${getIsDev() ? 'ts' : 'js'}`),
+  ),
 );
 
 export const resolvers = Object.assign(someResolvers, scalar);

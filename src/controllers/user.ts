@@ -35,7 +35,10 @@ export async function createUser(data: UserData) {
     throw new ServerError(errMap.user.U0004);
   }
 
-  const headImg = `data:image/png;base64,${new Idention(sha1(username).toString(), 64).toString()}`;
+  const headImg = `data:image/png;base64,${new Idention(
+    sha1(username).toString(),
+    64,
+  ).toString()}`;
   const encryPass = sha256(password + PATH_ENV.ENCRY_USER_STRING).toString();
   const user = new User({
     headImg,

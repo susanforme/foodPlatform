@@ -29,7 +29,9 @@ export default function setWs(socketServer: Server) {
         });
     });
     socket.on('disconnect', () => {
-      console.log(`${now()},${socket.handshake.session?.username}的客户端已经断开`);
+      console.log(
+        `${now()},${socket.handshake.session?.username}的客户端已经断开`,
+      );
     });
   });
 }
