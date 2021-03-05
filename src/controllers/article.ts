@@ -92,7 +92,7 @@ export async function getSortArticle(data: GiveFiveCountArticleData) {
     response = await Article.find(search)
       .skip((page - 1) * 20)
       .sort({
-        give: 1,
+        give: -1,
       })
       .limit(perPage)
       .populate('author', {
