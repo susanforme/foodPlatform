@@ -126,6 +126,10 @@ export async function loginByData(body: LoginData) {
   return data;
 }
 
+export async function updateHeadImg(url: string, userId: string) {
+  await User.findByIdAndUpdate(userId, { headImg: url });
+}
+
 /**
  * @description
  * 修改location

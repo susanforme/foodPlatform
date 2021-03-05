@@ -9,6 +9,7 @@ import {
   getUserById,
   getUserByUsername,
   loginByData,
+  updateHeadImg,
   updateUserLocation,
 } from '@/controllers/user';
 import { Context } from '@/document/context';
@@ -122,6 +123,15 @@ export default {
         });
       });
       return data;
+    },
+    async updateHeadImg(_: any, args: any, context: Context) {
+      const url = args.url;
+      const userId = context.session.userId;
+      if (!userId) {
+        throw new Error('未登录');
+      }
+      await updateHeadImg(url, userId);
+      return true;
     },
   },
 };
